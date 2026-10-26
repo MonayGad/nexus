@@ -40,7 +40,7 @@ body.desk #side{display:flex}
 <body>
 <div id="splash" aria-hidden="true"><div class="logo">N</div><span>Nexus</span></div>
 <div id="stage">
-<div id="device"><iframe id="app" title="Nexus app" src="screens/Login.dc.html"></iframe></div>
+<div id="device"><iframe id="app" title="Nexus app" src="Login.dc.html"></iframe></div>
 <aside id="side">
 <h1>Nexus,<br><em>redesigned.</em></h1>
 <p>A live prototype of the student app. Click through it like the real thing: sign in, open a workspace, submit a task, chat.</p>
@@ -70,7 +70,7 @@ window.addEventListener('resize', fit); fit();
 let shown = false;
 const hideSplash = () => { if (!shown) { shown = true; setTimeout(() => document.getElementById('splash').classList.add('hide'), 700); } };
 frame.addEventListener('load', hideSplash); setTimeout(hideSplash, 4000);
-document.getElementById('restart').addEventListener('click', () => { frame.src = 'screens/Login.dc.html'; });
+document.getElementById('restart').addEventListener('click', () => { frame.src = 'Login.dc.html'; });
 </script>
 </body>
 </html>

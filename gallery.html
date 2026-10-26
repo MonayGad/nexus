@@ -59,11 +59,11 @@ for (const p of M.pages) {
     const f = document.createElement('figure');
     const ph = document.createElement('div'); ph.className = 'phone';
     const sc = document.createElement('div'); sc.className = 'screen';
-    const fr = document.createElement('iframe'); fr.loading = 'lazy'; fr.title = b.t; fr.src = 'screens/' + b.f;
+    const fr = document.createElement('iframe'); fr.loading = 'lazy'; fr.title = b.t; fr.src = b.f;
     sc.appendChild(fr); ph.appendChild(sc); f.appendChild(ph);
     const c = document.createElement('figcaption');
     const t = document.createElement('span'); t.textContent = b.t;
-    const o = document.createElement('a'); o.href = 'screens/' + b.f; o.target = '_blank'; o.rel = 'noopener'; o.textContent = 'Open ↗';
+    const o = document.createElement('a'); o.href = b.f; o.target = '_blank'; o.rel = 'noopener'; o.textContent = 'Open ↗';
     c.appendChild(t); c.appendChild(o); f.appendChild(c); g.appendChild(f);
   }
   main.appendChild(s);
