@@ -2,75 +2,74 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>Nexus</title>
-<meta name="theme-color" content="#EEF0F5">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Nexus">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" href="icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nexus · All screens</title><link rel="icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-html,body{margin:0;height:100%;background:#EEF0F5;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#1B1D22;overflow:hidden;-webkit-tap-highlight-color:transparent}
-#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;gap:48px}
-#device{position:relative;flex-shrink:0;overflow:hidden;background:#EEF0F5}
-#device iframe{position:absolute;top:0;left:0;width:390px;border:0;transform-origin:0 0;background:#EEF0F5}
-#splash{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#EEF0F5;transition:opacity .5s ease,visibility .5s ease}
-#splash.hide{opacity:0;visibility:hidden}
-#splash .logo{width:76px;height:76px;border-radius:24px;background:#7A1426;color:#fff;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:800;box-shadow:0 16px 36px rgba(122,20,38,.35);animation:pop .9s cubic-bezier(.2,.9,.3,1.3) both}
-#splash span{font-weight:800;font-size:20px;letter-spacing:-.02em;animation:fade .8s .2s both}
-@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
-@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-/* desktop: phone frame + side panel */
-body.desk{background:radial-gradient(circle at 80% 10%,rgba(122,20,38,.25),transparent 40%),radial-gradient(circle at 10% 80%,rgba(91,141,239,.25),transparent 45%),#EEF0F5}
-body.desk #device{border-radius:46px;border:10px solid #1B1D22;box-shadow:0 40px 80px rgba(27,29,34,.25)}
-#side{display:none;max-width:300px;flex-direction:column;gap:14px}
-body.desk #side{display:flex}
-#side h1{font-size:40px;letter-spacing:-.03em;line-height:1.05;margin:0}
-#side h1 em{font-style:normal;color:#7A1426}
-#side p{margin:0;color:#4B5563;line-height:1.6;font-size:15px}
-#side a,#side button{display:inline-flex;align-items:center;justify-content:center;height:48px;border-radius:16px;font:inherit;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;border:none}
-#side .primary{background:#7A1426;color:#fff;box-shadow:0 10px 24px rgba(122,20,38,.3)}
-#side .soft{background:rgba(255,255,255,.75);color:#1B1D22;border:1px solid #fff}
+:root{--maroon:#7A1426;--ink:#1B1D22;--ink-2:#4B5563;--ground:#EEF0F5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);overflow-x:hidden}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+.b1{width:420px;height:420px;background:#7A1426;opacity:.35;top:-120px;right:-120px}
+.b2{width:360px;height:360px;background:#FF7A59;opacity:.35;top:40%;left:-140px}
+.b3{width:380px;height:380px;background:#5B8DEF;opacity:.3;bottom:-120px;right:10%}
+header{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:22px 16px 14px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.cta{display:inline-flex;align-items:center;height:42px;padding:0 18px;border-radius:14px;background:#7A1426;color:#fff;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 10px 24px rgba(122,20,38,.3)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo span{width:40px;height:40px;border-radius:13px;background:var(--maroon);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(122,20,38,.35)}
+h1{font-size:clamp(26px,3.6vw,38px);letter-spacing:-.03em;line-height:1.1;margin:14px 0 6px}
+h1 em{font-style:normal;color:var(--maroon)}
+p.lead{max-width:760px;color:var(--ink-2);font-size:14px;line-height:1.5;margin:0}
+nav{position:sticky;top:0;z-index:5;background:rgba(238,240,245,.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.8)}
+nav div{max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{flex-shrink:0;padding:9px 14px;border-radius:14px;background:rgba(255,255,255,.7);color:var(--ink);text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap}
+nav a:hover{background:var(--maroon);color:#fff}
+section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:22px 16px 8px;scroll-margin-top:64px}
+h2{font-size:22px;letter-spacing:-.02em;margin:0 0 14px}
+.grid{display:flex;flex-wrap:wrap;gap:28px}
+figure{margin:0;display:flex;flex-direction:column;gap:10px}
+.phone{width:302px;border-radius:40px;padding:6px;background:#1B1D22;box-shadow:0 30px 60px rgba(27,29,34,.18)}
+.screen{width:290px;height:627px;border-radius:34px;overflow:hidden;position:relative;background:var(--ground)}
+.screen iframe{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform:scale(.7436);transform-origin:0 0}
+figcaption{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:0 6px}
+figcaption a{font-size:12px;color:var(--maroon);text-decoration:none;font-weight:800}
+footer{position:relative;z-index:1;text-align:center;color:var(--ink-2);font-size:13px;padding:48px 16px}
+@media (max-width:420px){.grid{justify-content:center}}
 </style>
 </head>
 <body>
-<div id="splash" aria-hidden="true"><div class="logo">N</div><span>Nexus</span></div>
-<div id="stage">
-<div id="device"><iframe id="app" title="Nexus app" src="Login.dc.html"></iframe></div>
-<aside id="side">
-<h1>Nexus,<br><em>redesigned.</em></h1>
-<p>A live prototype of the student app. Click through it like the real thing: sign in, open a workspace, submit a task, chat.</p>
-<button class="primary" id="restart">Restart from login</button>
-<a class="soft" href="gallery.html">See all 45 screens</a>
-<p style="font-size:13px">On your phone, open this link and choose “Add to Home Screen” to use it like an app.</p>
-</aside>
-</div>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<header>
+<div class="top"><div class="logo"><span>N</span>Nexus Academic System</div><a class="cta" href="app.html">Open as app ↗</a></div>
+<h1>The student app, <em>redesigned.</em></h1>
+<p class="lead">Every screen of Nexus, rebuilt with a glassy maroon look. Each phone is live: tap, switch tabs, type. Use “Open ↗” to see a screen full size.</p>
+</header>
+<nav aria-label="Flows"><div id="nav"></div></nav>
+<main id="main"></main>
+<footer>Nexus · UI redesign preview</footer>
 <script>
-const W = 390, H = 844;
-const device = document.getElementById('device'), frame = document.getElementById('app');
-function fit() {
-  const vw = window.innerWidth, vh = window.innerHeight;
-  const desk = vw >= 760;
-  document.body.classList.toggle('desk', desk);
-  if (desk) {
-    const s = Math.min(1, (vh - 60) / H);
-    device.style.width = W * s + 'px'; device.style.height = H * s + 'px';
-    frame.style.height = H + 'px'; frame.style.transform = 'scale(' + s + ')';
-  } else {
-    const s = vw / W;
-    device.style.width = vw + 'px'; device.style.height = vh + 'px';
-    frame.style.height = (vh / s) + 'px'; frame.style.transform = 'scale(' + s + ')';
+const M = {"pages": [{"id": "auth", "name": "1 \u00b7 Auth"}, {"id": "home", "name": "2 \u00b7 Home"}, {"id": "workspace", "name": "3 \u00b7 Workspaces"}, {"id": "tasks", "name": "4 \u00b7 Tasks & submissions"}, {"id": "announce", "name": "5 \u00b7 Announcements & members"}, {"id": "chat", "name": "6 \u00b7 Chat"}, {"id": "profile", "name": "7 \u00b7 Profile & privacy"}], "boards": [{"f": "Login.dc.html", "t": "Login", "h": 844, "p": "auth"}, {"f": "VerifyEmail.dc.html", "t": "Verify email (OTP)", "h": 844, "p": "auth"}, {"f": "RestoreAccount.dc.html", "t": "Restore account", "h": 844, "p": "auth"}, {"f": "RestoreOtp.dc.html", "t": "Confirm restore (OTP)", "h": 844, "p": "auth"}, {"f": "DeleteAccountOtp.dc.html", "t": "Confirm deletion (OTP)", "h": 844, "p": "auth"}, {"f": "Home.dc.html", "t": "Home", "h": 1100, "p": "home"}, {"f": "HomeStates.dc.html", "t": "Home \u00b7 empty, offline, loading", "h": 844, "p": "home"}, {"f": "Workspaces.dc.html", "t": "Workspaces", "h": 980, "p": "workspace"}, {"f": "WorkspaceSearch.dc.html", "t": "Search workspaces", "h": 844, "p": "workspace"}, {"f": "CreateWorkspace.dc.html", "t": "Create workspace sheet", "h": 844, "p": "workspace"}, {"f": "JoinWorkspace.dc.html", "t": "Join workspace sheet", "h": 844, "p": "workspace"}, {"f": "EditWorkspace.dc.html", "t": "Edit workspace sheet", "h": 844, "p": "workspace"}, {"f": "WorkspaceOverview.dc.html", "t": "Workspace overview", "h": 1060, "p": "workspace"}, {"f": "WorkspaceActions.dc.html", "t": "Workspace actions + confirm", "h": 844, "p": "workspace"}, {"f": "Tasks.dc.html", "t": "Tasks", "h": 1180, "p": "tasks"}, {"f": "TaskActions.dc.html", "t": "Task actions + delete", "h": 844, "p": "tasks"}, {"f": "NewTask.dc.html", "t": "New task sheet", "h": 1000, "p": "tasks"}, {"f": "EditTask.dc.html", "t": "Edit task sheet", "h": 1000, "p": "tasks"}, {"f": "TaskComments.dc.html", "t": "Comments sheet", "h": 844, "p": "tasks"}, {"f": "TaskDetails.dc.html", "t": "Task details \u00b7 member", "h": 1200, "p": "tasks"}, {"f": "TaskDetailsAdmin.dc.html", "t": "Task details \u00b7 admin", "h": 1000, "p": "tasks"}, {"f": "Submissions.dc.html", "t": "Submission management", "h": 1150, "p": "tasks"}, {"f": "GradeSubmission.dc.html", "t": "Grade submission sheet", "h": 960, "p": "tasks"}, {"f": "MySubmission.dc.html", "t": "My submission", "h": 1200, "p": "tasks"}, {"f": "EditSubmission.dc.html", "t": "Edit submission", "h": 1120, "p": "tasks"}, {"f": "Announcements.dc.html", "t": "Announcements", "h": 1180, "p": "announce"}, {"f": "AnnouncementComments.dc.html", "t": "Announcement comments", "h": 844, "p": "announce"}, {"f": "CreateAnnouncement.dc.html", "t": "Create announcement sheet", "h": 900, "p": "announce"}, {"f": "Members.dc.html", "t": "Members", "h": 1080, "p": "announce"}, {"f": "AddMember.dc.html", "t": "Add member sheet", "h": 844, "p": "announce"}, {"f": "InviteCode.dc.html", "t": "Workspace code sheet", "h": 844, "p": "announce"}, {"f": "Chats.dc.html", "t": "Chats", "h": 1000, "p": "chat"}, {"f": "NewConversation.dc.html", "t": "New conversation", "h": 1040, "p": "chat"}, {"f": "Conversation.dc.html", "t": "Conversation", "h": 844, "p": "chat"}, {"f": "ConversationSearch.dc.html", "t": "Search in conversation", "h": 844, "p": "chat"}, {"f": "MessageActions.dc.html", "t": "Message actions + delete", "h": 844, "p": "chat"}, {"f": "VoiceRecording.dc.html", "t": "Voice recording + offline queue", "h": 844, "p": "chat"}, {"f": "ConversationInfo.dc.html", "t": "Conversation info", "h": 1280, "p": "chat"}, {"f": "AddChatMember.dc.html", "t": "Add chat member sheet", "h": 844, "p": "chat"}, {"f": "SharedMedia.dc.html", "t": "Media, docs and links", "h": 980, "p": "chat"}, {"f": "Profile.dc.html", "t": "Profile", "h": 900, "p": "profile"}, {"f": "EditProfile.dc.html", "t": "Edit profile", "h": 1140, "p": "profile"}, {"f": "Privacy.dc.html", "t": "Privacy and visibility", "h": 1040, "p": "profile"}, {"f": "Logout.dc.html", "t": "Log out dialog", "h": 844, "p": "profile"}, {"f": "Deactivate.dc.html", "t": "Deactivate account dialog", "h": 844, "p": "profile"}]}
+;
+const nav = document.getElementById('nav'), main = document.getElementById('main');
+for (const p of M.pages) {
+  const a = document.createElement('a'); a.href = '#' + p.id; a.textContent = p.name.replace(/^\d+ · /, ''); nav.appendChild(a);
+  const s = document.createElement('section'); s.id = p.id;
+  const h = document.createElement('h2'); h.textContent = p.name.replace(/^\d+ · /, ''); s.appendChild(h);
+  const g = document.createElement('div'); g.className = 'grid'; s.appendChild(g);
+  for (const b of M.boards.filter(x => x.p === p.id)) {
+    const f = document.createElement('figure');
+    const ph = document.createElement('div'); ph.className = 'phone';
+    const sc = document.createElement('div'); sc.className = 'screen';
+    const fr = document.createElement('iframe'); fr.loading = 'lazy'; fr.title = b.t; fr.src = b.f;
+    sc.appendChild(fr); ph.appendChild(sc); f.appendChild(ph);
+    const c = document.createElement('figcaption');
+    const t = document.createElement('span'); t.textContent = b.t;
+    const o = document.createElement('a'); o.href = b.f; o.target = '_blank'; o.rel = 'noopener'; o.textContent = 'Open ↗';
+    c.appendChild(t); c.appendChild(o); f.appendChild(c); g.appendChild(f);
   }
+  main.appendChild(s);
 }
-window.addEventListener('resize', fit); fit();
-let shown = false;
-const hideSplash = () => { if (!shown) { shown = true; setTimeout(() => document.getElementById('splash').classList.add('hide'), 700); } };
-frame.addEventListener('load', hideSplash); setTimeout(hideSplash, 4000);
-document.getElementById('restart').addEventListener('click', () => { frame.src = 'Login.dc.html'; });
 </script>
 </body>
 </html>

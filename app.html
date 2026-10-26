@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Nexus</title>
+<meta name="theme-color" content="#EEF0F5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Nexus">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#EEF0F5;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#1B1D22;overflow:hidden;-webkit-tap-highlight-color:transparent}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;gap:48px}
+#device{position:relative;flex-shrink:0;overflow:hidden;background:#EEF0F5}
+#device iframe{position:absolute;top:0;left:0;width:390px;border:0;transform-origin:0 0;background:#EEF0F5}
+#splash{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#EEF0F5;transition:opacity .5s ease,visibility .5s ease}
+#splash.hide{opacity:0;visibility:hidden}
+#splash .logo{width:76px;height:76px;border-radius:24px;background:#7A1426;color:#fff;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:800;box-shadow:0 16px 36px rgba(122,20,38,.35);animation:pop .9s cubic-bezier(.2,.9,.3,1.3) both}
+#splash span{font-weight:800;font-size:20px;letter-spacing:-.02em;animation:fade .8s .2s both}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* desktop: phone frame + side panel */
+body.desk{background:radial-gradient(circle at 80% 10%,rgba(122,20,38,.25),transparent 40%),radial-gradient(circle at 10% 80%,rgba(91,141,239,.25),transparent 45%),#EEF0F5}
+body.desk #device{border-radius:46px;border:10px solid #1B1D22;box-shadow:0 40px 80px rgba(27,29,34,.25)}
+#side{display:none;max-width:300px;flex-direction:column;gap:14px}
+body.desk #side{display:flex}
+#side h1{font-size:40px;letter-spacing:-.03em;line-height:1.05;margin:0}
+#side h1 em{font-style:normal;color:#7A1426}
+#side p{margin:0;color:#4B5563;line-height:1.6;font-size:15px}
+#side a,#side button{display:inline-flex;align-items:center;justify-content:center;height:48px;border-radius:16px;font:inherit;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;border:none}
+#side .primary{background:#7A1426;color:#fff;box-shadow:0 10px 24px rgba(122,20,38,.3)}
+#side .soft{background:rgba(255,255,255,.75);color:#1B1D22;border:1px solid #fff}
+</style>
+</head>
+<body>
+<div id="splash" aria-hidden="true"><div class="logo">N</div><span>Nexus</span></div>
+<div id="stage">
+<div id="device"><iframe id="app" title="Nexus app" src="Login.dc.html"></iframe></div>
+<aside id="side">
+<h1>Nexus,<br><em>redesigned.</em></h1>
+<p>A live prototype of the student app. Click through it like the real thing: sign in, open a workspace, submit a task, chat.</p>
+<button class="primary" id="restart">Restart from login</button>
+<a class="soft" href="index.html">See all 45 screens</a>
+<p style="font-size:13px">On your phone, open this link and choose “Add to Home Screen” to use it like an app.</p>
+</aside>
+</div>
+<script>
+const W = 390, H = 844;
+const device = document.getElementById('device'), frame = document.getElementById('app');
+function fit() {
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const desk = vw >= 760;
+  document.body.classList.toggle('desk', desk);
+  if (desk) {
+    const s = Math.min(1, (vh - 60) / H);
+    device.style.width = W * s + 'px'; device.style.height = H * s + 'px';
+    frame.style.height = H + 'px'; frame.style.transform = 'scale(' + s + ')';
+  } else {
+    const s = vw / W;
+    device.style.width = vw + 'px'; device.style.height = vh + 'px';
+    frame.style.height = (vh / s) + 'px'; frame.style.transform = 'scale(' + s + ')';
+  }
+}
+window.addEventListener('resize', fit); fit();
+let shown = false;
+const hideSplash = () => { if (!shown) { shown = true; setTimeout(() => document.getElementById('splash').classList.add('hide'), 700); } };
+frame.addEventListener('load', hideSplash); setTimeout(hideSplash, 4000);
+document.getElementById('restart').addEventListener('click', () => { frame.src = 'Login.dc.html'; });
+</script>
+</body>
+</html>
