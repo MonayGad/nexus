@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Task details</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1200px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div><div class="blob bl5"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="Tasks.dc.html" aria-label="Back to tasks"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<span class="t grow">Task details</span>
+<a class="ib" href="TaskActions.dc.html" aria-label="Task menu"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></a>
+</div>
+
+<div class="hero rise d2" style="display: flex; flex-direction: column; gap: 12px">
+<div class="sheen" aria-hidden="true"></div>
+<div class="row gap6"><span class="chip c-hero">Delivered</span><span class="chip c-hero"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path></svg>Public</span><span class="grow"></span><span class="chip" style="background: #F2A93B; color: #3D2603"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"></path></svg>150 points</span></div>
+<span style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: #FFFFFF">Q3 Financial Report Analysis</span>
+<div class="row" style="gap: 10px; padding: 12px; border-radius: 16px; background: rgba(255,255,255,.14)">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="color: #FFFFFF"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="col grow"><span class="ts" style="color: #FFFFFF">Due Today, 11:59 PM</span><span class="cap on-hero">{{left}} left</span></span>
+<div style="width: 60px" class="bar"><i style="width: 80%"></i></div>
+</div>
+</div>
+
+<div class="glass card col gap8 rise d3"><span class="over">Description</span><p class="body">Compile data from all regional offices and prepare the preliminary slide deck for the board meeting. Use the board template attached below.</p></div>
+
+<div class="col gap10 rise d4">
+<h2 class="h2">Attachments</h2>
+<div class="file lift"><span class="tile bg-pink" style="width: 40px; height: 40px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">board_template.pptx</span><span class="cap">3.1 MB · Tap to open</span></span><button class="ib ib-soft ib-sm" aria-label="Download board_template.pptx"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg></button></div>
+<div class="file lift"><span class="tile bg-blue" style="width: 40px; height: 40px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-5-5L5 21"></path></svg></span><span class="col grow"><span class="ts">regional_offices_map.png</span><span class="cap">820 KB · Tap to open</span></span><button class="ib ib-soft ib-sm" aria-label="Download regional_offices_map.png"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg></button></div>
+</div>
+
+<div class="glass col rise d5" style="border-radius: 28px; padding: 18px; gap: 14px">
+<div class="row"><h2 class="h2 grow">My work</h2><span class="{{statusCls}}">{{statusLabel}}</span></div>
+<sc-if value="{{open}}" hint-placeholder-val="{{ true }}">
+<button class="dash col center" onClick="{{addFile}}" style="padding: 18px; gap: 8px; cursor: pointer; font: inherit; width: 100%">
+<span class="tile bg-soft"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"></path></svg></span>
+<span class="ts" style="color: #7A1426">Upload files</span><span class="cap">Up to 50MB each</span>
+</button>
+<sc-for list="{{files}}" as="f" hint-placeholder-count="1">
+<div class="file pop"><span class="tile bg-amber" style="width: 38px; height: 38px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">{{f.name}}</span><span class="cap">New • {{f.size}}</span></span><button class="ib ib-sm" aria-label="Remove file" onClick="{{f.remove}}" style="background: #FBE1E7; border: none; color: #B3261E"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></div>
+</sc-for>
+<sc-if value="{{err}}" hint-placeholder-val="{{ false }}"><span class="err-t">Add at least one file before submitting.</span></sc-if>
+<button class="btn btn-primary btn-block" onClick="{{onSubmit}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4Z"></path></svg>Submit task</button>
+</sc-if>
+<sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+<div class="status pop" style="background: #E3F1EA; color: #2F6B4F"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Submission sent.</div>
+<span class="small">To update your files, use “Edit submission” from the task menu (⋮).</span>
+<a class="btn btn-soft btn-block" href="MySubmission.dc.html">View my submission</a>
+</sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1200}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { files: [{ id: 1, name: 'q3_analysis_nour.pptx', size: '4.6 MB' }], tried: false, sent: false, secs: 4 * 3600 + 12 * 60 }; }
+  componentDidMount() { this.t = setInterval(() => this.setState({ secs: Math.max(0, this.state.secs - 60) }), 60000); }
+  componentWillUnmount() { clearInterval(this.t); }
+  renderVals() {
+    const files = this.state.files;
+    const h = Math.floor(this.state.secs / 3600), m = Math.floor((this.state.secs % 3600) / 60);
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      left: h + 'h ' + m + 'm',
+      open: !this.state.sent,
+      sent: this.state.sent,
+      statusCls: this.state.sent ? 'chip c-blue' : 'chip c-amber',
+      statusLabel: this.state.sent ? 'Submitted' : 'Not submitted',
+      files: files.map((f) => ({ ...f, remove: () => this.setState({ files: this.state.files.filter((x) => x.id !== f.id) }) })),
+      err: this.state.tried && files.length === 0,
+      addFile: () => this.setState({ files: files.concat([{ id: Date.now(), name: 'appendix_tables.xlsx', size: '1.1 MB' }]) }),
+      onSubmit: () => this.setState({ tried: true, sent: files.length > 0 })
+    };
+  }
+}
+</script>
+</body>
+</html>

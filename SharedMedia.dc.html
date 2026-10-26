@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Group media</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.tileimg{aspect-ratio:1;border-radius:16px;position:relative;display:flex;align-items:center;justify-content:center;color:#FFFFFF;animation:popin .4s cubic-bezier(.2,.9,.3,1.2) both}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 980px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="ConversationInfo.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<div class="col grow"><span class="t">Group media</span><span class="cap">24 items shared</span></div>
+</div>
+<label class="glass row rise d2" style="height: 50px; border-radius: 18px; padding: 0 16px; gap: 10px; color: #4B5563"><span class="sr">Search media, docs, links</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input placeholder="Search media, docs, links..." value="{{q}}" onChange="{{onQ}}" style="flex: 1; min-width: 0; border: none; outline: none; background: transparent; font: inherit; font-size: 14px; color: #1B1D22"></label>
+<div class="tabs rise d3" role="tablist" aria-label="Shared content type">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button role="tab" aria-selected="{{t.sel}}" class="{{t.cls}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for>
+</div>
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #E3F1EA; color: #2F6B4F">Link copied to clipboard</div></sc-if>
+
+<sc-if value="{{isMedia}}" hint-placeholder-val="{{ true }}">
+<span class="over">Recent</span>
+<div class="grid3">
+<sc-for list="{{media}}" as="m" hint-placeholder-count="6">
+<div class="tileimg" style="background: {{m.bg}}; animation-delay: {{m.d}}"><sc-if value="{{m.video}}" hint-placeholder-val="{{ false }}"><span style="width: 34px; height: 34px; border-radius: 50%; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true" style="fill: currentColor"><path d="M7 4v16l13-8z"></path></svg></span></sc-if></div>
+</sc-for>
+</div>
+<span class="over">This month</span>
+<div class="grid3"><div class="tileimg" style="background: linear-gradient(135deg,#4F6D8F,#7A1426)"></div><div class="tileimg" style="background: linear-gradient(135deg,#F2A93B,#FF7A59)"></div><div class="tileimg" style="background: linear-gradient(135deg,#5B8DEF,#E0466A)"></div></div>
+</sc-if>
+
+<sc-if value="{{isDocs}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{docs}}" as="d" hint-placeholder-count="4">
+<div class="file pop"><span class="tile" style="background: {{d.tone}}; width: 42px; height: 42px; border-radius: 13px; font-size: 10px; font-weight: 800">{{d.ext}}</span><span class="col grow"><span class="ts">{{d.name}}</span><span class="cap">{{d.meta}}</span><span class="cap">Sent by {{d.by}}</span></span><button class="btn btn-soft btn-sm">Open</button></div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{isLinks}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{links}}" as="l" hint-placeholder-count="3">
+<div class="glass col pop" style="border-radius: 20px; padding: 14px; gap: 8px"><div class="row"><span class="tile tile-s c-blue"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"></path><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"></path></svg></span><span class="col grow"><span class="ts" style="color: #24384F">{{l.url}}</span><span class="cap">Sent by {{l.by}} • {{l.date}}</span></span></div><div class="row gap8"><button class="btn btn-soft btn-sm" onClick="{{copy}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>Copy link</button><button class="btn btn-glass btn-sm"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>Open</button></div></div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}"><div class="glass col center" style="border-radius: 24px; padding: 24px; gap: 6px"><span class="t">{{emptyTitle}}</span><span class="small">Try searching with a different term</span></div></sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":980}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { tab: 'media', q: '', toast: false }; }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const q = this.state.q.trim().toLowerCase();
+    const G = ['linear-gradient(135deg,#FF7A59,#F2A93B)', 'linear-gradient(135deg,#5B8DEF,#4F6D8F)', 'linear-gradient(135deg,#E0466A,#7A1426)', 'linear-gradient(135deg,#2F9E6B,#5B8DEF)', 'linear-gradient(135deg,#F2A93B,#E0466A)', 'linear-gradient(135deg,#7A1426,#4F6D8F)'];
+    const media = G.map((bg, i) => ({ bg, d: (i * 0.05).toFixed(2) + 's', video: i === 1 || i === 4, name: 'photo ' + i }));
+    const docs = [
+      { ext: 'PDF', tone: '#E0466A', name: 'Module 5 notes.pdf', meta: 'FILE · 2.4 MB • Today at 8:14', by: 'Omar' },
+      { ext: 'XLS', tone: '#2F9E6B', name: 'practice_scores.xlsx', meta: 'FILE · 640 KB • Yesterday', by: 'You' },
+      { ext: 'PPT', tone: '#FF7A59', name: 'review_session.pptx', meta: 'FILE · 5.1 MB • Oct 20, 2026', by: 'Salma' },
+      { ext: 'ZIP', tone: '#F2A93B', name: 'datasets.zip', meta: 'FILE · 18 MB • Oct 18, 2026', by: 'Dr. Hany' }
+    ].filter((d) => !q || d.name.toLowerCase().includes(q));
+    const links = [
+      { url: 'docs.google.com/nexus-guide', by: 'You', date: 'Today at 8:14' },
+      { url: 'kaggle.com/datasets/auto-mpg', by: 'Omar', date: 'Yesterday' },
+      { url: 'youtube.com/watch?v=residuals', by: 'Laila', date: 'Oct 21, 2026' }
+    ].filter((l) => !q || l.url.toLowerCase().includes(q));
+    const tab = this.state.tab;
+    const mediaShown = q ? [] : media;
+    const count = { media: mediaShown.length, docs: docs.length, links: links.length }[tab];
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      q: this.state.q,
+      tabs: [['media', 'Media (12)'], ['docs', 'Docs (8)'], ['links', 'Links (4)']].map(([id, label]) => ({ label, sel: tab === id ? 'true' : 'false', cls: tab === id ? 'tab on' : 'tab', pick: () => this.setState({ tab: id }) })),
+      isMedia: tab === 'media' && mediaShown.length > 0, isDocs: tab === 'docs', isLinks: tab === 'links',
+      media: mediaShown, docs, links,
+      empty: count === 0,
+      emptyTitle: { media: 'No matching media', docs: 'No matching documents', links: 'No matching links' }[tab],
+      hasToast: this.state.toast,
+      copy: () => { this.setState({ toast: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ toast: false }), 2000); },
+      onQ: (e) => this.setState({ q: e.target.value })
+    };
+  }
+}
+</script>
+</body>
+</html>

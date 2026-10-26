@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Submission management</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1150px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div><div class="blob bl5"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="TaskDetailsAdmin.dc.html" aria-label="Back to task"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<div class="col grow"><span class="t">Submission management</span><span class="cap">Midterm Study Guide · 100 points</span></div>
+</div>
+
+<div class="hero row rise d2" style="gap: 16px">
+<div class="sheen" aria-hidden="true"></div>
+<div style="position: relative; width: 84px; height: 84px; flex-shrink: 0">
+<svg width="84" height="84" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="5"></circle><circle cx="22" cy="22" r="18" fill="none" stroke="#F2A93B" stroke-width="5" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="44" transform="rotate(-90 22 22)" style="animation: ring 1.6s cubic-bezier(.2,.8,.2,1) .3s both"></circle></svg>
+<span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #FFFFFF">61%</span>
+</div>
+<div class="row grow" style="gap: 10px">
+<div class="col grow"><span style="font-size: 28px; font-weight: 800; color: #FFFFFF">18</span><span class="cap on-hero">Total submissions</span></div>
+<div class="col grow"><span style="font-size: 28px; font-weight: 800; color: #FFFFFF">11</span><span class="cap on-hero">Graded</span></div>
+</div>
+</div>
+
+<div class="tabs rise d3" role="tablist" aria-label="Filter submissions">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button role="tab" aria-selected="{{t.sel}}" class="{{t.cls}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for>
+</div>
+
+<div class="col gap10">
+<sc-for list="{{list}}" as="s" hint-placeholder-count="4">
+<div class="glass lift col pop" style="border-radius: 24px; padding: 16px; gap: 12px">
+<div class="row">
+<span class="{{s.av}}">{{s.i}}</span>
+<div class="col grow"><span class="ts">{{s.name}}</span><span class="cap">{{s.when}}</span></div>
+<span class="{{s.chip}}">{{s.state}}</span>
+</div>
+<sc-if value="{{s.hasFeedback}}" hint-placeholder-val="{{ true }}"><span class="body" style="font-size: 13px; font-style: italic; padding-left: 12px; border-left: 3px solid #F6DCDF">“{{s.feedback}}”</span></sc-if>
+<div class="row gap8">
+<span class="chip c-neutral"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>{{s.file}}</span>
+<span class="grow"></span>
+<a class="btn btn-soft btn-sm" href="GradeSubmission.dc.html"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>{{s.action}}</a>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{ false }}">
+<div class="glass col center pop" style="border-radius: 28px; padding: 26px; gap: 8px"><span class="tile tile-l c-blue"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.5 5h13L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"></path></svg></span><span class="t">{{emptyTitle}}</span><span class="small">{{emptyText}}</span></div>
+</sc-if>
+</div>
+<button class="btn btn-glass btn-block">Load more</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1150}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { tab: 'all' }; }
+  renderVals() {
+    const all = [
+      { i: 'LH', tone: 'c-coral', name: 'Laila Hassan', when: 'Graded Oct 26, 10:02 AM', state: 'Graded: 92/100', chip: 'chip c-mint', graded: true, feedback: 'Strong structure. Add one more worked example for module 4.', file: 'study_guide_laila.pdf' },
+      { i: 'YM', tone: 'c-amber', name: 'Youssef Mahmoud', when: 'Submitted Oct 25, 9:14 PM', state: 'Submitted', chip: 'chip c-blue', graded: false, feedback: '', file: 'guide_v2.docx' },
+      { i: 'SA', tone: 'c-maroon', name: 'Salma Adel', when: 'Returned · submitted Oct 24, 6:40 PM', state: 'Returned', chip: 'chip c-amber', graded: false, feedback: 'Missing the practice set. Please update and resubmit.', file: 'midterm_notes.pdf' },
+      { i: 'OM', tone: 'c-blue', name: 'Omar Kamal', when: 'Graded Oct 25, 4:30 PM', state: 'Graded: 85/100', chip: 'chip c-mint', graded: true, feedback: 'Clear summaries. Watch the formatting in section 3.', file: 'omar_guide.zip' }
+    ];
+    const tab = this.state.tab;
+    const list = all.filter((s) => tab === 'all' || (tab === 'graded' ? s.graded : !s.graded)).map((s) => ({ ...s, av: 'av ' + s.tone, hasFeedback: !!s.feedback, action: s.graded ? 'Regrade' : 'Grade' }));
+    const E = { all: ['No submissions yet', 'Student submissions will appear here once they’ve been submitted.'], graded: ['No graded submissions', 'Submissions you grade will appear here.'], ungraded: ['No ungraded submissions', 'All submissions have been graded.'] };
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      tabs: [['all', 'All'], ['graded', 'Graded'], ['ungraded', 'Not graded']].map(([id, label]) => ({ label, sel: tab === id ? 'true' : 'false', cls: tab === id ? 'tab on' : 'tab', pick: () => this.setState({ tab: id }) })),
+      list: list,
+      isEmpty: list.length === 0,
+      emptyTitle: E[tab][0], emptyText: E[tab][1]
+    };
+  }
+}
+</script>
+</body>
+</html>

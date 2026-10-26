@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Confirm account deletion</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" style="gap: 20px">
+<a class="ib rise" href="EditProfile.dc.html" aria-label="Back to edit profile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+
+<div class="col gap10 rise d2">
+<h1 class="big">Confirm account<br><span style="color: #B3261E">deletion.</span></h1>
+<p class="body">Enter the 6-digit verification code we sent to</p>
+<span class="glass row" style="align-self: flex-start; gap: 8px; padding: 8px 12px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true" style="color: #7A1426"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="m3 7 9 6 9-6"></path></svg><span class="ts">nour.r@university.edu</span></span>
+</div>
+
+<div class="row rise d3" style="gap: 12px; padding: 16px; border-radius: 20px; background: rgba(251,225,231,.85); border: 1px solid rgba(179,38,30,.3)">
+<div class="tile tile-s" style="background: #B3261E; color: #FFFFFF; animation: wiggle 2.4s ease-in-out infinite"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20z"></path><path d="M12 10v4M12 17h.01"></path></svg></div>
+<span class="small grow" style="color: #4A0D18; font-weight: 600">Confirming this code will permanently delete your account.</span>
+</div>
+
+<div class="glass rise d4" style="border-radius: 28px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<label class="over" for="dcode">Verification code</label>
+<div style="position: relative">
+<div class="otp" aria-hidden="true">
+<sc-for list="{{boxes}}" as="b" hint-placeholder-count="6"><span class="{{b.cls}}">{{b.d}}</span></sc-for>
+</div>
+<input id="dcode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" value="{{code}}" onChange="{{onCode}}" style="position: absolute; inset: 0; opacity: 0; width: 100%; font-size: 16px">
+</div>
+<sc-if value="{{showError}}" hint-placeholder-val="{{ false }}"><span class="err-t">Please enter the 6-digit verification code.</span></sc-if>
+<sc-if value="{{deleted}}" hint-placeholder-val="{{ false }}">
+<div class="status pop" style="background: #FBE1E7; color: #B3261E"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Your account has been deleted.</div>
+<a class="btn btn-glass btn-block" href="Login.dc.html">Back to login</a>
+</sc-if>
+<sc-if value="{{notDeleted}}" hint-placeholder-val="{{ true }}">
+<button class="btn btn-danger btn-block" onClick="{{onConfirm}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"></path></svg>Confirm deletion</button>
+</sc-if>
+</div>
+
+<div class="row center rise d5" style="gap: 8px">
+<sc-if value="{{waiting}}" hint-placeholder-val="{{ true }}"><span class="small" style="font-weight: 700">Resend code in {{timer}}</span></sc-if>
+<sc-if value="{{canResend}}" hint-placeholder-val="{{ false }}"><button class="btn btn-soft btn-sm" onClick="{{onResend}}">Resend code</button></sc-if>
+</div>
+</div>
+
+<div class="row center" style="position: absolute; left: 0; right: 0; bottom: 30px; gap: 14px">
+<a class="cap" href="#help" style="text-decoration: none">Help &amp; Support</a>
+<span class="cap" aria-hidden="true">·</span>
+<a class="cap" href="#privacy" style="text-decoration: none">Privacy Policy</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { code: '5', tried: false, deleted: false, seconds: 58 }; }
+  componentDidMount() { this.timer = setInterval(() => { if (this.state.seconds > 0) this.setState({ seconds: this.state.seconds - 1 }); }, 1000); }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    const code = this.state.code;
+    const s = this.state.seconds;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      code: code,
+      boxes: [0, 1, 2, 3, 4, 5].map((i) => ({ d: code[i] || '', cls: i < code.length ? '' : (i === code.length ? 'cur' : 'e') })),
+      showError: this.state.tried && code.length !== 6,
+      deleted: this.state.deleted,
+      notDeleted: !this.state.deleted,
+      waiting: s > 0,
+      canResend: s === 0,
+      timer: '00:' + String(s).padStart(2, '0'),
+      onCode: (e) => this.setState({ code: e.target.value.replace(/[^0-9]/g, '').slice(0, 6) }),
+      onConfirm: () => (code.length === 6 ? this.setState({ deleted: true }) : this.setState({ tried: true })),
+      onResend: () => this.setState({ seconds: 60 })
+    };
+  }
+}
+</script>
+</body>
+</html>

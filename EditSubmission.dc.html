@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edit submission</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+.mini{height:34px;border-radius:11px;border:none;padding:0 10px;font:inherit;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1120px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="MySubmission.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<span class="t grow">Edit submission</span>
+<button class="btn btn-primary btn-sm" onClick="{{onSave}}">Save changes</button>
+</div>
+
+<div class="glass col rise d2" style="border-radius: 26px; padding: 18px; gap: 10px">
+<div class="row gap6"><span class="chip c-mint">Delivered</span><span class="chip c-neutral">Public</span><span class="grow"></span><span class="pts">100 points</span></div>
+<span class="h1">Midterm Study Guide</span>
+<span class="chip c-blue" style="align-self: flex-start">Due Oct 28, 11:59 PM</span>
+<span class="small">Update your submitted work before the deadline.</span>
+</div>
+
+<sc-if value="{{saved}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #E3F1EA; color: #2F6B4F"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Submission updated.</div></sc-if>
+
+<div class="glass col rise d3" style="border-radius: 24px; padding: 16px; gap: 12px">
+<span class="over">Existing submission</span>
+<div class="row"><span class="av c-maroon">NR</span><span class="col grow"><span class="ts">You</span><span class="cap">Submitted Oct 25, 8:51 PM</span></span><span class="chip c-blue">Submitted</span></div>
+</div>
+
+<div class="col gap10 rise d4">
+<h2 class="h2">My work</h2>
+<sc-for list="{{files}}" as="f" hint-placeholder-count="2">
+<div class="glass-hi col pop" style="border-radius: 20px; padding: 12px; gap: 10px">
+<div class="row"><span class="tile" style="background: {{f.tone}}; width: 40px; height: 40px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">{{f.name}}</span><span class="cap">{{f.meta}}</span></span></div>
+<div class="row gap6">
+<button class="mini" style="background: #DCE6F2; color: #24384F"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg>Download</button>
+<button class="mini" onClick="{{f.replace}}" style="background: #FCEFD6; color: #4A2E05"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"></path><path d="M21 3v5h-5"></path></svg>Replace</button>
+<button class="mini" onClick="{{f.remove}}" style="background: #FBE1E7; color: #B3261E"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"></path></svg>Remove</button>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{none}}" hint-placeholder-val="{{ false }}">
+<div class="row" style="gap: 12px; padding: 14px; border-radius: 20px; background: #FBE1E7; color: #B3261E"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20z"></path><path d="M12 10v4M12 17h.01"></path></svg><span class="col grow"><span class="ts">Add at least one file</span><span class="cap" style="color: #B3261E">You need at least one attachment before you can save.</span></span></div>
+</sc-if>
+<button class="dash row" onClick="{{addFile}}" style="padding: 14px; gap: 12px; cursor: pointer; font: inherit; width: 100%; text-align: left">
+<span class="tile bg-soft"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 12-8.5 8.5a5.5 5.5 0 0 1-7.8-7.8l9-9a3.7 3.7 0 0 1 5.2 5.2l-9 9a1.8 1.8 0 0 1-2.6-2.6L15.5 7"></path></svg></span>
+<span class="col grow"><span class="ts" style="color: #7A1426">Add attachment</span><span class="cap">Tap to add another file to your submission.</span></span>
+</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1120}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { saved: false, files: [{ id: 1, name: 'study_guide_nour.pdf', meta: 'Current · 2.2 MB', tone: '#E0466A' }, { id: 2, name: 'practice_set.docx', meta: 'New • 420 KB', tone: '#5B8DEF' }] }; }
+  renderVals() {
+    const files = this.state.files;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      saved: this.state.saved,
+      none: files.length === 0,
+      files: files.map((f) => ({ ...f, remove: () => this.setState({ saved: false, files: this.state.files.filter((x) => x.id !== f.id) }), replace: () => this.setState({ saved: false, files: this.state.files.map((x) => x.id === f.id ? { ...x, name: 'v2_' + x.name, meta: 'New • replaced' } : x) }) })),
+      addFile: () => this.setState({ saved: false, files: files.concat([{ id: Date.now(), name: 'appendix.pdf', meta: 'New • 1.0 MB', tone: '#F2A93B' }]) }),
+      onSave: () => this.setState({ saved: files.length > 0 })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edit workspace</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" aria-hidden="true">
+<div class="hero hero-blue" style="height: 190px"></div>
+<div class="glass" style="height: 80px; border-radius: 22px"></div>
+</div>
+<div class="scrim"></div>
+<div class="sheet" role="dialog" aria-label="Edit workspace">
+<div class="handle" aria-hidden="true"></div>
+<div class="row"><h2 class="h1 grow">Edit workspace</h2><a class="ib" href="WorkspaceOverview.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></a></div>
+<sc-if value="{{saved}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #E3F1EA; color: #2F6B4F"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Changes saved.</div></sc-if>
+<div class="field">
+<label class="over" for="ewname">Workspace name</label>
+<div class="input"><input id="ewname" placeholder="Workspace name" value="{{name}}" onChange="{{onName}}"></div>
+</div>
+<div class="field">
+<label class="over" for="ewdesc">Description</label>
+<textarea id="ewdesc" class="area" placeholder="What is this workspace for?" style="min-height: 84px">Weekly labs, datasets and project check-ins for AID 427.</textarea>
+</div>
+<div class="field">
+<span class="over">Cover image</span>
+<button class="col center" style="height: 112px; border: none; border-radius: 20px; background: linear-gradient(135deg,#5B8DEF,#4F6D8F); cursor: pointer; font: inherit; width: 100%">
+<span class="chip c-neutral"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-5-5L5 21"></path></svg>Tap to change the cover</span>
+</button>
+</div>
+<div class="row" style="gap: 10px">
+<a class="btn btn-soft grow" href="WorkspaceOverview.dc.html">Cancel</a>
+<button class="btn btn-primary grow" onClick="{{onSave}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"></path></svg>Save changes</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { name: 'Data Science Lab', saved: false }; }
+  renderVals() {
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      name: this.state.name,
+      saved: this.state.saved,
+      onName: (e) => this.setState({ name: e.target.value, saved: false }),
+      onSave: () => this.setState({ saved: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

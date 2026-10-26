@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workspace actions</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" aria-hidden="true">
+<div class="hero hero-blue" style="height: 190px"></div>
+<div class="glass" style="height: 52px; border-radius: 18px"></div>
+<div class="glass" style="height: 110px; border-radius: 22px"></div>
+</div>
+<div class="scrim"></div>
+<div class="sheet" role="dialog" aria-label="Workspace actions">
+<div class="handle" aria-hidden="true"></div>
+<div class="row"><div class="col grow"><h2 class="h1">Data Science Lab</h2><span class="small">Workspace actions</span></div><a class="ib" href="WorkspaceOverview.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></a></div>
+<div class="col gap8">
+<a class="actrow" href="EditWorkspace.dc.html" style="text-decoration: none"><span class="tile c-blue"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span><span class="col grow"><span class="ts">Edit workspace</span><span class="cap">Name, description and cover</span></span></a>
+<button class="actrow" onClick="{{askArchive}}"><span class="tile c-amber"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"></rect><path d="M5 9v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4"></path></svg></span><span class="col grow"><span class="ts">Archive workspace</span><span class="cap">Hidden from Active. Restore it any time.</span></span></button>
+<button class="actrow" onClick="{{askLeave}}"><span class="tile c-blue"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5M21 12H9"></path></svg></span><span class="col grow"><span class="ts">Leave workspace</span><span class="cap">Rejoin later with the invite code.</span></span></button>
+<button class="actrow danger" onClick="{{askDelete}}"><span class="tile c-danger"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"></path></svg></span><span class="col grow"><span class="ts" style="color: #B3261E">Delete workspace</span><span class="cap">Removes members, tasks and announcements.</span></span></button>
+</div>
+</div>
+
+<sc-if value="{{open}}" hint-placeholder-val="{{ true }}">
+<div class="scrim" style="z-index: 10"></div>
+<div class="dialog" role="alertdialog" aria-label="{{title}}" style="z-index: 11">
+<div>
+<span class="tile tile-l" style="background: {{tone}}"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20z"></path><path d="M12 10v4M12 17h.01"></path></svg></span>
+<h2 class="h2">{{title}}</h2>
+<p class="body" style="font-size: 13px">{{text}}</p>
+<div class="row" style="gap: 10px; width: 100%">
+<button class="btn btn-soft grow" onClick="{{close}}">Cancel</button>
+<button class="{{confirmCls}}" onClick="{{close}}">{{confirm}}</button>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { ask: 'archive' }; }
+  renderVals() {
+    const D = {
+      archive: { title: 'Archive workspace?', text: 'Archived workspaces are hidden from the Active list. You can restore them later.', confirm: 'Archive', tone: '#F2A93B', cls: 'btn btn-primary grow' },
+      leave: { title: 'Leave workspace?', text: 'You will lose access until you join again with the invite code. If you are the last admin, promote someone else first.', confirm: 'Leave', tone: '#4F6D8F', cls: 'btn btn-primary grow' },
+      delete: { title: 'Delete workspace?', text: 'This permanently deletes the workspace, members, tasks, and announcements. This cannot be undone.', confirm: 'Delete', tone: '#B3261E', cls: 'btn btn-danger grow' }
+    };
+    const d = D[this.state.ask] || D.archive;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      open: !!this.state.ask,
+      title: d.title, text: d.text, confirm: d.confirm, tone: d.tone, confirmCls: d.cls,
+      askArchive: () => this.setState({ ask: 'archive' }),
+      askLeave: () => this.setState({ ask: 'leave' }),
+      askDelete: () => this.setState({ ask: 'delete' }),
+      close: () => this.setState({ ask: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

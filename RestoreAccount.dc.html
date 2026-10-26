@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Restore your account</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" style="gap: 22px">
+<a class="ib rise" href="Login.dc.html" aria-label="Back to login"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+
+<div class="tile tile-xl bg-slate rise d1" style="width: 84px; height: 84px; border-radius: 28px; box-shadow: 0 16px 34px rgba(79,109,143,.35)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 38px; height: 38px; animation: spin 8s linear infinite"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"></path><path d="M21 3v5h-5"></path></svg></div>
+
+<div class="col gap10 rise d2">
+<h1 class="big">Restore your<br><span style="color: #7A1426">account.</span></h1>
+<p class="body">Enter your university email to reactivate your account</p>
+</div>
+
+<div class="glass rise d3" style="border-radius: 28px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<div class="field">
+<label class="over" for="remail">University email</label>
+<div class="{{inputClass}}">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="m3 7 9 6 9-6"></path></svg>
+<input id="remail" type="email" placeholder="student@university.edu" value="{{email}}" onChange="{{onEmail}}">
+</div>
+<sc-if value="{{showError}}" hint-placeholder-val="{{ false }}"><span class="err-t">Please enter your university email.</span></sc-if>
+</div>
+<sc-if value="{{valid}}" hint-placeholder-val="{{ false }}">
+<a class="btn btn-primary btn-block" href="RestoreOtp.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4Z"></path></svg>Send restore code</a>
+</sc-if>
+<sc-if value="{{invalid}}" hint-placeholder-val="{{ true }}">
+<button class="btn btn-primary btn-block" onClick="{{onSend}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4Z"></path></svg>Send restore code</button>
+</sc-if>
+</div>
+
+<div class="glass-hi row rise d4" style="border-radius: 20px; padding: 14px; gap: 12px">
+<div class="tile tile-s c-blue"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></div>
+<span class="small grow">We’ll send a 6-digit code. Your workspaces and chats come back exactly as you left them.</span>
+</div>
+</div>
+
+<div class="row center" style="position: absolute; left: 0; right: 0; bottom: 30px; gap: 14px">
+<svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true" style="color: #4B5563"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg>
+<a class="cap" href="#help" style="text-decoration: none">Help &amp; Support</a>
+<span class="cap" aria-hidden="true">·</span>
+<a class="cap" href="#privacy" style="text-decoration: none">Privacy Policy</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { email: '', tried: false }; }
+  renderVals() {
+    const valid = this.state.email.trim().length > 0;
+    const showError = this.state.tried && !valid;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      email: this.state.email,
+      valid: valid,
+      invalid: !valid,
+      showError: showError,
+      inputClass: showError ? 'input err' : 'input',
+      onEmail: (e) => this.setState({ email: e.target.value }),
+      onSend: () => this.setState({ tried: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

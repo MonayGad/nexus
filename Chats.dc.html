@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chats</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1000px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div><div class="blob bl5"></div></div>
+<div class="page">
+<div class="row rise">
+<div class="col grow"><h1 class="display">Chat</h1><span class="small">{{unreadLine}}</span></div>
+<button class="ib" aria-label="Notifications"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></button>
+</div>
+<sc-if value="{{offline}}" hint-placeholder-val="{{ false }}">
+<div class="row pop" style="gap: 10px; padding: 10px 14px; border-radius: 16px; background: #FCEFD6; color: #4A2E05"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 2l20 20M8.5 16.4a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 5.2-2.8M2 8.8a15 15 0 0 1 4.2-2.6M22 8.8A15 15 0 0 0 10.7 5M12 20h.01"></path></svg><span class="small grow" style="color: #4A2E05; font-weight: 600">You’re offline. Showing saved chats.</span></div>
+</sc-if>
+<div class="row rise d2" style="gap: 10px">
+<label class="glass row grow" style="height: 50px; border-radius: 18px; padding: 0 16px; gap: 10px; color: #4B5563"><span class="sr">Search conversations</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" placeholder="Search conversations..." value="{{q}}" onChange="{{onQ}}" style="flex: 1; min-width: 0; border: none; outline: none; background: transparent; font: inherit; font-size: 14px; color: #1B1D22"></label>
+<button class="ib" aria-label="Filter"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M4 12h4M12 12h8M4 18h12"></path><circle cx="17" cy="6" r="2"></circle><circle cx="10" cy="12" r="2"></circle><circle cx="19" cy="18" r="2"></circle></svg></button>
+</div>
+<div class="col gap8">
+<sc-for list="{{chats}}" as="c" hint-placeholder-count="6">
+<a class="glass lift row pop" href="Conversation.dc.html" style="border-radius: 22px; padding: 12px; gap: 12px; text-decoration: none; color: #1B1D22; animation-delay: {{c.delay}}">
+<span class="ringwrap" style="width: 52px; height: 52px"><sc-if value="{{c.unread}}" hint-placeholder-val="{{ true }}"><span class="ring" aria-hidden="true"></span></sc-if><span class="{{c.av}}" style="font-size: 14px">{{c.i}}</span></span>
+<span class="col grow gap4"><span class="row gap6"><span class="ts" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{c.title}}</span><sc-if value="{{c.group}}" hint-placeholder-val="{{ false }}"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true" style="color: #4B5563"><circle cx="9" cy="8" r="4"></circle><path d="M2 21c1-4 3.5-6 7-6s6 2 7 6"></path></svg></sc-if></span><span class="{{c.lastCls}}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{c.last}}</span></span>
+<span class="col" style="align-items: flex-end; gap: 6px"><span class="cap">{{c.time}}</span><sc-if value="{{c.unread}}" hint-placeholder-val="{{ true }}"><span class="unread">{{c.n}}</span></sc-if></span>
+</a>
+</sc-for>
+<sc-if value="{{none}}" hint-placeholder-val="{{ false }}"><div class="glass col center" style="border-radius: 24px; padding: 24px; gap: 6px"><span class="t">No conversations found.</span><span class="small">Try another name or start a new chat.</span></div></sc-if>
+</div>
+</div>
+<a class="fab" href="NewConversation.dc.html" aria-label="New conversation"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path><path d="M12 9v6M9 12h6"></path></svg></a>
+<nav class="nav" aria-label="Main">
+<a href="Home.dc.html" aria-label="Home"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"></path></svg></a>
+<a href="Workspaces.dc.html" aria-label="Workspaces"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"></path><path d="m2 12 10 5 10-5"></path><path d="m2 17 10 5 10-5"></path></svg></a>
+<a class="on" href="Chats.dc.html"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Chats</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"offline":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { q: '' }; }
+  renderVals() {
+    const all = [
+      { i: 'DS', tone: 'c-blue', title: 'AID 427 study circle', last: 'Laila: Uploading my draft tonight', time: '8:21 PM', n: 5, group: true },
+      { i: 'SA', tone: 'c-maroon', title: 'Salma Adel', last: 'Voice message · 0:24', time: '7:58 PM', n: 2, group: false },
+      { i: 'ML', tone: 'c-pink', title: 'ML project squad', last: 'Omar: pushed the notebook ✓', time: '6:12 PM', n: 0, group: true },
+      { i: 'HF', tone: 'c-amber', title: 'Dr. Hany Fawzy', last: 'See you in B204 on Thursday.', time: 'Yesterday', n: 0, group: false },
+      { i: 'UX', tone: 'c-coral', title: 'Design Studio crit', last: 'You: poster_v3.png', time: 'Mon', n: 0, group: true },
+      { i: 'YM', tone: 'c-mint', title: 'Youssef Mahmoud', last: 'No messages yet', time: 'Sun', n: 0, group: false }
+    ];
+    const q = this.state.q.trim().toLowerCase();
+    const list = all.filter((c) => !q || c.title.toLowerCase().includes(q));
+    const unread = all.reduce((s, c) => s + c.n, 0);
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      offline: this.props.offline ?? false,
+      unreadLine: unread + ' unread messages',
+      q: this.state.q,
+      none: list.length === 0,
+      chats: list.map((c, i) => ({ ...c, av: 'av ' + c.tone, unread: c.n > 0, lastCls: c.n > 0 ? 'small' : 'cap', delay: (0.15 + i * 0.05).toFixed(2) + 's' })),
+      onQ: (e) => this.setState({ q: e.target.value })
+    };
+  }
+}
+</script>
+</body>
+</html>

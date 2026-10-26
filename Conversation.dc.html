@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Conversation</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+.wave{display:flex;align-items:center;gap:2px;height:24px}
+.wave i{width:3px;border-radius:2px;background:currentColor;opacity:.85}
+.quote{border-left:3px solid #E0466A;padding:6px 10px;border-radius:10px;background:rgba(224,70,106,.08);font-size:12px}
+.meta{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600}
+.rbtn{border:none;background:rgba(255,255,255,.6);width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#4B5563;cursor:pointer;flex-shrink:0}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl5"></div></div>
+
+<header class="row" style="position: absolute; top: 0; left: 0; right: 0; z-index: 3; padding: 50px 14px 12px; gap: 10px; background: rgba(255,255,255,.6); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255,255,255,.85)">
+<a class="ib ib-sm" href="Chats.dc.html" aria-label="Back to chats" style="background: transparent; border: none"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<div class="stack"><span class="av c-maroon">SA</span><span class="av c-blue">OM</span></div>
+<a class="col grow" href="ConversationInfo.dc.html" style="text-decoration: none; color: #1B1D22; min-width: 0"><span class="ts" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">AID 427 study circle</span><span class="row gap4 cap" style="color: #2F6B4F"><span style="position: relative; width: 7px; height: 7px"><span style="position: absolute; inset: 0; border-radius: 50%; background: #2F9E6B"></span><span style="position: absolute; inset: 0; border-radius: 50%; background: #2F9E6B; animation: ping 1.8s ease-out infinite"></span></span>Group chat · 8 online</span></a>
+<a class="ib ib-sm" href="ConversationSearch.dc.html" aria-label="Search conversation"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a>
+<a class="ib ib-sm" href="ConversationInfo.dc.html" aria-label="Conversation information"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></a>
+</header>
+
+<div class="col" style="position: absolute; top: 112px; bottom: {{listBottom}}; left: 0; right: 0; padding: 0 14px 10px; gap: 10px; justify-content: flex-end; overflow: hidden">
+<span class="cap" style="align-self: center; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.6); font-weight: 700">Today</span>
+
+<div class="row pop" style="align-items: flex-end; gap: 8px; max-width: 88%; animation-delay: .05s">
+<span class="av av-s c-coral">LH</span>
+<div class="col gap4"><span class="cap" style="color: #7A1426; font-weight: 800; padding-left: 4px">Laila</span>
+<div class="b-them" style="border-radius: 20px 20px 20px 6px; padding: 8px; overflow: hidden"><div style="width: 200px; height: 120px; border-radius: 14px; background: linear-gradient(135deg,#FF7A59,#F2A93B 50%,#5B8DEF); display: flex; align-items: flex-end; padding: 8px"><span class="chip c-neutral"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-5-5L5 21"></path></svg>whiteboard.jpg</span></div></div>
+</div>
+<button class="rbtn" aria-label="Reply to Laila" onClick="{{replyLaila}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"></path><path d="M4 9h11a5 5 0 0 1 5 5v6"></path></svg></button>
+</div>
+
+<div class="row pop" style="align-items: flex-end; gap: 8px; max-width: 88%; animation-delay: .12s">
+<span class="av av-s c-blue">OM</span>
+<div class="b-them col gap6" style="padding: 10px 12px"><div class="row" style="gap: 10px"><span class="tile bg-pink" style="width: 38px; height: 38px; border-radius: 11px; font-size: 10px; font-weight: 800">PDF</span><span class="col"><span class="ts">Module 5 notes</span><span class="cap">2.4 MB · 18 pages</span></span><button class="ib ib-soft ib-sm" aria-label="Download Module 5 notes" style="width: 34px; height: 34px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg></button></div></div>
+</div>
+
+<div class="row pop" style="align-items: flex-end; gap: 8px; max-width: 88%; animation-delay: .19s">
+<span class="av av-s c-maroon">SA</span>
+<div class="b-them row" style="padding: 10px 14px; gap: 10px; color: #7A1426"><button class="ib ib-brand ib-sm" aria-label="Play voice message" onClick="{{togglePlay}}" style="width: 36px; height: 36px; border-radius: 50%"><sc-if value="{{playing}}" hint-placeholder-val="{{ false }}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16M16 4v16"></path></svg></sc-if><sc-if value="{{paused}}" hint-placeholder-val="{{ true }}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true" style="fill: currentColor"><path d="M7 4v16l13-8z"></path></svg></sc-if></button><div class="wave" aria-hidden="true"><sc-for list="{{bars}}" as="b" hint-placeholder-count="18"><i style="height: {{b.h}}; animation: {{b.anim}}"></i></sc-for></div><span class="cap" style="color: #1B1D22">0:24</span></div>
+</div>
+
+<div class="col pop" style="align-self: flex-end; align-items: flex-end; gap: 4px; max-width: 82%; animation-delay: .26s">
+<div class="b-me bubble"><div class="quote" style="background: rgba(255,255,255,.14); border-left-color: #FF7A59; margin-bottom: 6px; color: #F6DCDF"><b style="color: #FFFFFF">Omar</b> · Module 5 notes</div>Perfect, I’ll take module 5. Draft here: <u>docs.google.com/nexus-guide</u></div>
+<span class="meta" style="color: #7A1426">8:14 PM <svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="m2 12 5 5L18 6"></path><path d="m12 16 1 1L23 6"></path></svg></span>
+</div>
+
+<div class="row" style="align-self: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.55)"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true" style="color: #4B5563"><circle cx="12" cy="12" r="9"></circle><path d="m5.6 5.6 12.8 12.8"></path></svg><span class="cap" style="font-style: italic">This message was deleted</span></div>
+
+<sc-for list="{{mine}}" as="m" hint-placeholder-count="1">
+<div class="col pop" style="align-self: flex-end; align-items: flex-end; gap: 4px; max-width: 82%">
+<a class="b-me bubble" href="MessageActions.dc.html" style="text-decoration: none">{{m.text}}</a>
+<span class="meta" style="color: {{m.color}}">{{m.time}} · {{m.state}}</span>
+</div>
+</sc-for>
+
+<div class="row pop" style="gap: 8px; animation-delay: .4s">
+<span class="av av-s c-amber">YM</span>
+<div class="b-them typing" role="status" aria-label="Youssef is typing"><i style="background: #7A1426"></i><i style="background: #E0466A; animation-delay: .15s"></i><i style="background: #FF7A59; animation-delay: .3s"></i></div>
+</div>
+</div>
+
+<div class="col" style="position: absolute; left: 12px; right: 12px; bottom: 24px; gap: 8px; z-index: 3">
+<sc-if value="{{replying}}" hint-placeholder-val="{{ false }}">
+<div class="row pop" style="gap: 10px; padding: 10px 12px; border-radius: 18px; background: rgba(255,255,255,.85); backdrop-filter: blur(20px); border: 1px solid #FFFFFF">
+<svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true" style="color: #E0466A"><path d="M9 14 4 9l5-5"></path><path d="M4 9h11a5 5 0 0 1 5 5v6"></path></svg>
+<span class="col grow"><span class="cap" style="color: #7A1426; font-weight: 800">Replying to {{replyTo}}</span><span class="cap">{{replyText}}</span></span>
+<button class="rbtn" aria-label="Cancel reply" onClick="{{cancelReply}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+</div>
+</sc-if>
+<div class="row" style="gap: 8px; padding: 8px; border-radius: 26px; border: 1px solid rgba(255,255,255,.85); background: rgba(255,255,255,.66); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: 0 10px 30px rgba(27,29,34,.08)">
+<button class="ib ib-sm" aria-label="Attach file" style="background: #DCE6F2; border: none; color: #24384F; width: 44px; height: 44px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 12-8.5 8.5a5.5 5.5 0 0 1-7.8-7.8l9-9a3.7 3.7 0 0 1 5.2 5.2l-9 9a1.8 1.8 0 0 1-2.6-2.6L15.5 7"></path></svg></button>
+<label class="sr" for="msg">Write a message</label>
+<input id="msg" placeholder="Write a message..." value="{{draft}}" onChange="{{onDraft}}" style="flex: 1; min-width: 0; height: 44px; border: none; outline: none; background: transparent; font: inherit; font-size: 15px">
+<sc-if value="{{hasDraft}}" hint-placeholder-val="{{ false }}"><button class="ib ib-brand" aria-label="Send message" onClick="{{onSend}}" style="width: 48px; height: 48px; border-radius: 18px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4Z"></path></svg></button></sc-if>
+<sc-if value="{{noDraft}}" hint-placeholder-val="{{ true }}"><a class="ib ib-brand" href="VoiceRecording.dc.html" aria-label="Record voice message" style="width: 48px; height: 48px; border-radius: 18px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 17v5"></path></svg></a></sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { draft: '', reply: null, playing: false, mine: [] }; }
+  renderVals() {
+    const H = [8, 14, 20, 12, 18, 24, 10, 16, 22, 14, 8, 18, 12, 20, 10, 14, 8, 12];
+    const playing = this.state.playing;
+    const reply = this.state.reply;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      listBottom: reply ? '160px' : '100px',
+      bars: H.map((h, i) => ({ h: h + 'px', anim: playing ? 'eq .9s ease-in-out ' + (i * 0.05).toFixed(2) + 's infinite' : 'none' })),
+      playing: playing, paused: !playing,
+      togglePlay: () => this.setState({ playing: !playing }),
+      mine: this.state.mine,
+      replying: !!reply,
+      replyTo: reply ? reply.who : '',
+      replyText: reply ? reply.text : '',
+      replyLaila: () => this.setState({ reply: { who: 'Laila', text: 'Photo · whiteboard.jpg' } }),
+      cancelReply: () => this.setState({ reply: null }),
+      draft: this.state.draft,
+      hasDraft: this.state.draft.trim().length > 0,
+      noDraft: this.state.draft.trim().length === 0,
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      onSend: () => {
+        const t = this.state.draft.trim(); if (!t) return;
+        const now = new Date();
+        const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        const id = Date.now();
+        this.setState({ draft: '', reply: null, mine: this.state.mine.concat([{ id, text: t, time, state: 'Sending', color: '#4B5563' }]) });
+        setTimeout(() => this.setState({ mine: this.state.mine.map((m) => m.id === id ? { ...m, state: 'Read', color: '#7A1426' } : m) }), 1200);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

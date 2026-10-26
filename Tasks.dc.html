@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workspace tasks</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1180px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div><div class="blob bl5"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="WorkspaceOverview.dc.html" aria-label="Back to workspace"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<div class="col grow"><span class="t">Data Science Lab</span><span class="cap">Workspace tasks</span></div>
+<a class="av c-maroon" href="Profile.dc.html" aria-label="Your profile" style="text-decoration: none">NR</a>
+</div>
+
+<div class="row rise d2" style="align-items: flex-end">
+<div class="col grow gap4"><h1 class="display">Tasks</h1><span class="small">{{subtitle}}</span></div>
+<sc-if value="{{isAdmin}}" hint-placeholder-val="{{ true }}"><a class="btn btn-primary btn-sm" href="NewTask.dc.html"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New task</a></sc-if>
+</div>
+
+<div class="tabs rise d3" role="tablist" aria-label="Filter tasks">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button role="tab" aria-selected="{{t.sel}}" class="{{t.cls}}" onClick="{{t.pick}}">{{t.label}}<span class="n">{{t.n}}</span></button></sc-for>
+</div>
+
+<div class="col gap14">
+<sc-for list="{{list}}" as="k" hint-placeholder-count="3">
+<article class="rail glass lift pop" style="animation-delay: {{k.delay}}">
+<div class="r" style="background: {{k.rail}}"></div>
+<div class="col grow" style="padding: 16px 16px 16px 14px; gap: 12px">
+<div class="row gap6">
+<sc-for list="{{k.chips}}" as="c" hint-placeholder-count="3"><span class="{{c.cls}}">{{c.label}}</span></sc-for>
+<span class="grow"></span>
+<a class="ib ib-sm" href="TaskActions.dc.html" aria-label="Task actions" style="background: transparent; border: none; backdrop-filter: none; width: 32px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></a>
+</div>
+<a href="{{k.href}}" style="text-decoration: none; color: #1B1D22" class="col gap6"><span style="font-size: 17px; font-weight: 800; letter-spacing: -0.01em">{{k.title}}</span><span class="body" style="font-size: 13px">{{k.desc}}</span></a>
+<sc-if value="{{k.hasStatus}}" hint-placeholder-val="{{ true }}"><div class="status" style="background: {{k.sBg}}; color: {{k.sFg}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>{{k.status}}</div></sc-if>
+<div class="row" style="gap: 10px">
+<div class="stack"><sc-for list="{{k.av}}" as="a" hint-placeholder-count="2"><span class="{{a.cls}}">{{a.i}}</span></sc-for></div>
+<a class="row gap4 cap" href="TaskComments.dc.html" style="text-decoration: none"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>{{k.comments}} comments</a>
+<span class="grow"></span>
+<span class="pts"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"></path></svg>{{k.points}}</span>
+</div>
+</div>
+</article>
+</sc-for>
+
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{ false }}">
+<div class="glass col center pop" style="border-radius: 28px; padding: 28px; gap: 10px">
+<span class="tile tile-xl bg-mint"><svg class="ic s28" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></span>
+<span class="h2">{{emptyTitle}}</span>
+<span class="small">{{emptyText}}</span>
+</div>
+</sc-if>
+</div>
+
+<button class="btn btn-glass btn-block"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"></path><path d="M21 3v5h-5"></path></svg>Load more tasks</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"role":{"editor":"enum","options":["admin","member"],"default":"admin"},"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { tab: 'all' }; }
+  renderVals() {
+    const admin = (this.props.role ?? 'admin') === 'admin';
+    const tab = this.state.tab;
+    const ch = (cls, label) => ({ cls: 'chip ' + cls, label });
+    const av = (c, i) => ({ cls: 'av av-s ' + c, i });
+    const A = [
+      { k: 'draft', rail: '#E0466A', chips: [ch('c-neutral', 'Public'), ch('c-amber', 'Draft'), ch('c-pink', 'Today')], title: 'Q3 Financial Report Analysis', desc: 'Compile data from all regional offices and prepare the preliminary slide deck for the board meeting.', status: '', av: [av('c-maroon', 'SA'), av('c-amber', 'YM')], comments: 3, points: 150 },
+      { k: 'delivered', rail: '#5B8DEF', chips: [ch('c-neutral', 'Public'), ch('c-mint', 'Delivered'), ch('c-blue', 'Oct 28')], title: 'Midterm Study Guide', desc: 'Outline the topics covered in modules 1–6 and draft a practice set for the midterm review session.', status: 'Published Oct 24 · 18 of 36 submitted', sBg: '#E3F1EA', sFg: '#2F6B4F', av: [av('c-coral', 'LH'), av('c-blue', 'OM')], comments: 7, points: 100 },
+      { k: 'draft', rail: '#4F6D8F', chips: [ch('c-neutral', 'Private'), ch('c-amber', 'Draft'), ch('c-neutral', 'Oct 30')], title: 'Update Brand Guidelines', desc: 'Incorporate new Nexus Red color values and typography scale into the central Figma library.', status: '', av: [av('c-maroon', 'NR')], comments: 0, points: 50 },
+      { k: 'delivered', rail: '#2F9E6B', chips: [ch('c-neutral', 'Public'), ch('c-mint', 'Delivered'), ch('c-neutral', 'Oct 20')], title: 'Lab 3 · Regression Diagnostics', desc: 'Run residual plots on the Auto MPG dataset and explain each assumption.', status: 'Published Oct 14 · 34 of 36 submitted', sBg: '#E3F1EA', sFg: '#2F6B4F', av: [av('c-blue', 'OM')], comments: 2, points: 40 }
+    ];
+    const M = [
+      { k: 'todo', rail: '#E0466A', chips: [ch('c-neutral', 'Public'), ch('c-pink', 'Today')], title: 'Q3 Financial Report Analysis', desc: 'Compile data from all regional offices and prepare the preliminary slide deck for the board meeting.', status: 'Not submitted yet', sBg: '#FCEFD6', sFg: '#4A2E05', av: [av('c-maroon', 'SA'), av('c-amber', 'YM')], comments: 3, points: 150 },
+      { k: 'submitted', rail: '#2F9E6B', chips: [ch('c-neutral', 'Public'), ch('c-mint', 'Graded')], title: 'Midterm Study Guide', desc: 'Outline the topics covered in modules 1–6 and draft a practice set.', status: 'Graded — 92 / 100', sBg: '#E3F1EA', sFg: '#2F6B4F', av: [av('c-coral', 'LH')], comments: 7, points: 100 },
+      { k: 'submitted', rail: '#5B8DEF', chips: [ch('c-neutral', 'Public'), ch('c-blue', 'Submitted')], title: 'Lab 4 · Classification report', desc: 'Train two classifiers and compare precision and recall on the shared dataset.', status: 'Submitted — Oct 25', sBg: '#DCE6F2', sFg: '#24384F', av: [av('c-blue', 'OM')], comments: 1, points: 60 },
+      { k: 'todo', rail: '#B3261E', chips: [ch('c-neutral', 'Public'), ch('c-danger', 'Missed')], title: 'Lab 3 · Regression Diagnostics', desc: 'Run residual plots on the Auto MPG dataset and explain each assumption.', status: 'Deadline has passed — no submission.', sBg: '#FBE1E7', sFg: '#B3261E', av: [av('c-blue', 'OM')], comments: 2, points: 40 }
+    ];
+    const src = admin ? A : M;
+    const tabsDef = admin ? [['all', 'All tasks'], ['draft', 'Draft'], ['delivered', 'Delivered']] : [['all', 'All tasks'], ['todo', 'To do'], ['submitted', 'Submitted']];
+    const valid = tabsDef.some((t) => t[0] === tab) ? tab : 'all';
+    const list = src.filter((x) => valid === 'all' || x.k === valid).map((x, i) => ({ ...x, hasStatus: !!x.status, href: admin ? 'TaskDetailsAdmin.dc.html' : 'TaskDetails.dc.html', delay: (0.15 + i * 0.07).toFixed(2) + 's' }));
+    const empties = { draft: ['No drafts', 'New tasks stay here until you deliver them.'], delivered: ['No tasks yet', 'Create your first task to get started.'], todo: ['All caught up', 'No pending tasks for you right now.'], submitted: ['Nothing here yet', 'Tasks you have submitted will appear here.'], all: ['No tasks yet', 'Tasks your instructor publishes will appear here.'] };
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      isAdmin: admin,
+      subtitle: admin ? 'Manage workspace deliverables.' : 'View and submit your deliverables.',
+      tabs: tabsDef.map(([id, label]) => ({ label, n: id === 'all' ? src.length : src.filter((x) => x.k === id).length, sel: valid === id ? 'true' : 'false', cls: valid === id ? 'tab on' : 'tab', pick: () => this.setState({ tab: id }) })),
+      list: list,
+      isEmpty: list.length === 0,
+      emptyTitle: (empties[valid] || empties.all)[0],
+      emptyText: (empties[valid] || empties.all)[1]
+    };
+  }
+}
+</script>
+</body>
+</html>

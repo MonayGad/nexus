@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Join workspace</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+.code8{display:flex;justify-content:space-between;gap:6px}
+.code8 span{width:38px;height:52px;border-radius:14px;background:rgba(255,255,255,.95);border:1px solid #D6DEE6;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;animation:popin .3s cubic-bezier(.2,.9,.3,1.3) both}
+.code8 span.e{background:rgba(255,255,255,.6);animation:none}
+.code8 span.cur{border:2px solid #7A1426;animation:none}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" aria-hidden="true">
+<h1 class="display">Workspaces</h1>
+<div class="glass" style="height: 50px; border-radius: 18px"></div>
+<div class="glass" style="height: 88px; border-radius: 24px"></div>
+<div class="glass" style="height: 88px; border-radius: 24px"></div>
+<div class="glass" style="height: 88px; border-radius: 24px"></div>
+</div>
+<div class="scrim"></div>
+<div class="sheet" role="dialog" aria-label="Join workspace">
+<div class="handle" aria-hidden="true"></div>
+<div class="row"><h2 class="h1 grow">Join workspace</h2><a class="ib" href="Workspaces.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></a></div>
+<div class="row" style="gap: 14px; padding: 16px; border-radius: 22px; background: #DCE6F2">
+<span class="tile bg-blue" style="width: 48px; height: 48px; border-radius: 16px"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"></circle><path d="m11 12 9-9M17 6l3 3M14 9l2 2"></path></svg></span>
+<span class="small grow" style="color: #24384F; font-weight: 600">Ask your instructor or workspace admin for the code.</span>
+</div>
+<div class="field">
+<label class="over" for="jcode">8-character join code</label>
+<div style="position: relative">
+<div class="code8" aria-hidden="true"><sc-for list="{{boxes}}" as="b" hint-placeholder-count="8"><span class="{{b.cls}}">{{b.c}}</span></sc-for></div>
+<input id="jcode" maxlength="8" autocapitalize="characters" value="{{code}}" onChange="{{onCode}}" style="position: absolute; inset: 0; opacity: 0; width: 100%; font-size: 16px">
+</div>
+<sc-if value="{{err}}" hint-placeholder-val="{{ false }}"><span class="err-t">Could not join the workspace. Check the code and try again.</span></sc-if>
+</div>
+<sc-if value="{{joined}}" hint-placeholder-val="{{ false }}">
+<div class="status pop" style="background: #E3F1EA; color: #2F6B4F"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Joined Data Science Lab.</div>
+<a class="btn btn-primary btn-block" href="WorkspaceOverview.dc.html">Open workspace<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</sc-if>
+<sc-if value="{{notJoined}}" hint-placeholder-val="{{ true }}">
+<button class="btn btn-primary btn-block" onClick="{{onJoin}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><path d="m10 17 5-5-5-5M15 12H3"></path></svg>Join</button>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { code: 'A1B2C3', tried: false, joined: false }; }
+  renderVals() {
+    const code = this.state.code;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      code: code,
+      boxes: [0, 1, 2, 3, 4, 5, 6, 7].map((i) => ({ c: code[i] || '', cls: i < code.length ? '' : (i === code.length ? 'cur' : 'e') })),
+      err: this.state.tried && code.length !== 8,
+      joined: this.state.joined,
+      notJoined: !this.state.joined,
+      onCode: (e) => this.setState({ code: e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 8), tried: false }),
+      onJoin: () => this.setState({ tried: true, joined: code.length === 8 })
+    };
+  }
+}
+</script>
+</body>
+</html>

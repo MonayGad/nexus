@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>New conversation</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+.urow{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.9);width:100%;font:inherit;text-align:left;cursor:pointer;transition:transform .2s ease}
+.urow.on{background:#FFFFFF;border:2px solid #7A1426}
+.check{width:24px;height:24px;border-radius:8px;border:2px solid #D6DEE6;display:flex;align-items:center;justify-content:center;color:#FFFFFF;flex-shrink:0}
+.urow.on .check{background:#7A1426;border-color:#7A1426}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1040px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="Chats.dc.html" aria-label="Back to chats"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<span class="t grow">New conversation</span>
+<button class="btn btn-primary btn-sm" onClick="{{onCreate}}">Create</button>
+</div>
+<sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #FBE1E7; color: #B3261E">{{err}}</div></sc-if>
+<sc-if value="{{created}}" hint-placeholder-val="{{ false }}"><a class="status pop" href="Conversation.dc.html" style="background: #E3F1EA; color: #2F6B4F; text-decoration: none">Conversation created. Open it →</a></sc-if>
+
+<div class="col gap8 rise d2">
+<span class="over">Conversation type</span>
+<div class="row" style="gap: 10px">
+<button class="{{directCls}}" onClick="{{setDirect}}" style="flex: 1; height: 96px; border-radius: 22px; font: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg><span class="ts">Direct</span></button>
+<button class="{{groupCls}}" onClick="{{setGroup}}" style="flex: 1; height: 96px; border-radius: 22px; font: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"></circle><path d="M2 21c1-4 3.5-6 7-6s6 2 7 6"></path><path d="M16 4a4 4 0 0 1 0 8M22 21c-.6-2.6-1.8-4.4-3.6-5.3"></path></svg><span class="ts">Group</span></button>
+</div>
+</div>
+
+<sc-if value="{{isGroup}}" hint-placeholder-val="{{ true }}">
+<div class="field pop"><label class="over" for="gt">Title</label><div class="{{titleCls}}"><input id="gt" placeholder="e.g., Senior Seminar Cohort B" value="{{title}}" onChange="{{onTitle}}"></div><sc-if value="{{titleErr}}" hint-placeholder-val="{{ false }}"><span class="err-t">Title is required.</span></sc-if></div>
+<div class="field pop"><label class="over" for="gd">Description</label><textarea id="gd" class="area" placeholder="Summary of objectives, topic focus, or collaboration scope..." style="min-height: 80px"></textarea></div>
+</sc-if>
+
+<div class="col gap10 rise d3">
+<div class="row between"><span class="over">Members</span><span class="cap">{{hint}}</span></div>
+<sc-if value="{{hasPicked}}" hint-placeholder-val="{{ true }}"><div class="row wrap gap6"><sc-for list="{{picked}}" as="p" hint-placeholder-count="2"><button class="chip c-solid" onClick="{{p.toggle}}" style="border: none; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700">{{p.name}}<svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></sc-for></div></sc-if>
+<label class="input"><span class="sr">Search users</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input placeholder="Search users by name or username..." value="{{q}}" onChange="{{onQ}}"></label>
+<span class="over">{{listLabel}}</span>
+<sc-for list="{{users}}" as="u" hint-placeholder-count="5">
+<button class="{{u.cls}}" onClick="{{u.toggle}}" role="checkbox" aria-checked="{{u.sel}}"><span class="{{u.av}}">{{u.i}}</span><span class="col grow"><span class="ts">{{u.name}}</span><span class="cap">{{u.meta}}</span></span><span class="check" aria-hidden="true"><svg class="ic s14" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"></path></svg></span></button>
+</sc-for>
+<sc-if value="{{noUsers}}" hint-placeholder-val="{{ false }}"><span class="small" style="text-align: center; padding: 14px">No users found.</span></sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1040}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { type: 'group', title: 'AID 427 project team', q: '', sel: [1, 3], err: '', tried: false, created: false }; }
+  renderVals() {
+    const U = [
+      { id: 1, i: 'LH', tone: 'c-coral', name: 'Laila Hassan', meta: '@laila.h • Student' },
+      { id: 2, i: 'YM', tone: 'c-amber', name: 'Youssef Mahmoud', meta: '@ymahmoud • Student' },
+      { id: 3, i: 'OM', tone: 'c-mint', name: 'Omar Kamal', meta: '@omar.k • Student' },
+      { id: 4, i: 'SA', tone: 'c-pink', name: 'Salma Adel', meta: '@salma • Teaching assistant' },
+      { id: 5, i: 'HF', tone: 'c-blue', name: 'Dr. Hany Fawzy', meta: '@hfawzy • Instructor' }
+    ];
+    const group = this.state.type === 'group';
+    const q = this.state.q.trim().toLowerCase();
+    const sel = this.state.sel;
+    const toggle = (id) => () => {
+      if (!group) return this.setState({ sel: sel[0] === id ? [] : [id], err: '' });
+      this.setState({ sel: sel.includes(id) ? sel.filter((x) => x !== id) : sel.concat([id]), err: '' });
+    };
+    const list = U.filter((u) => !q || (u.name + u.meta).toLowerCase().includes(q));
+    const titleErr = group && this.state.tried && !this.state.title.trim();
+    const card = (on) => on ? 'glass-hi' : 'glass';
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      isGroup: group,
+      directCls: group ? 'glass' : 'hero',
+      groupCls: group ? 'hero' : 'glass',
+      title: this.state.title,
+      titleCls: titleErr ? 'input err' : 'input',
+      titleErr: titleErr,
+      hint: group ? 'Select at least two users' : 'Select one user',
+      q: this.state.q,
+      listLabel: q ? 'Results' : 'Suggested users',
+      users: list.map((u) => ({ ...u, av: 'av ' + u.tone, sel: sel.includes(u.id) ? 'true' : 'false', cls: sel.includes(u.id) ? 'urow on' : 'urow', toggle: toggle(u.id) })),
+      noUsers: list.length === 0,
+      picked: U.filter((u) => sel.includes(u.id)).map((u) => ({ name: u.name, toggle: toggle(u.id) })),
+      hasPicked: sel.length > 0,
+      hasErr: !!this.state.err,
+      err: this.state.err,
+      created: this.state.created,
+      setDirect: () => this.setState({ type: 'direct', sel: sel.slice(0, 1), err: '' }),
+      setGroup: () => this.setState({ type: 'group', err: '' }),
+      onTitle: (e) => this.setState({ title: e.target.value }),
+      onQ: (e) => this.setState({ q: e.target.value }),
+      onCreate: () => {
+        if (!group && sel.length !== 1) return this.setState({ err: 'Select exactly one member for a direct conversation.', created: false });
+        if (group && sel.length < 2) return this.setState({ err: 'Select at least two members for a group conversation.', created: false });
+        if (group && !this.state.title.trim()) return this.setState({ tried: true, created: false });
+        this.setState({ created: true, err: '' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

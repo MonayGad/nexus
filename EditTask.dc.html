@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edit task</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1000px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" aria-hidden="true"><h1 class="display">Tasks</h1></div>
+<div class="scrim"></div>
+<div class="sheet" role="dialog" aria-label="Edit task">
+<div class="handle" aria-hidden="true"></div>
+<div class="row"><h2 class="h1 grow">Edit task</h2><a class="ib" href="TaskActions.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></a></div>
+<sc-if value="{{saved}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #E3F1EA; color: #2F6B4F"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Task updated.</div></sc-if>
+<div class="field"><label class="over" for="et">Title</label><div class="input"><input id="et" value="Q3 Financial Report Analysis"></div></div>
+<div class="field"><label class="over" for="ed">Description</label><textarea id="ed" class="area" style="min-height: 80px">Compile data from all regional offices and prepare the preliminary slide deck for the board meeting.</textarea></div>
+<div class="field"><label class="over" for="edl">Deadline</label><div class="input"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg><input id="edl" value="10/26/2026 • 11:59 PM"></div></div>
+<div class="row" style="gap: 10px">
+<div class="field grow"><span class="over">Points</span><div class="input" style="justify-content: center"><span style="font-size: 19px; font-weight: 800; color: #1B1D22">150</span></div></div>
+<div class="field grow"><span class="over">Visibility</span><div class="tabs" role="tablist" aria-label="Visibility" style="height: 54px"><button role="tab" aria-selected="true" class="tab on">Public</button><button role="tab" aria-selected="false" class="tab">Private</button></div></div>
+</div>
+<div class="field">
+<span class="over">Attachments</span>
+<div class="file"><span class="tile bg-pink" style="width: 38px; height: 38px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">File 1 · board_template.pptx</span><span class="cap">Uploaded Oct 22</span></span><button class="ib ib-soft ib-sm" aria-label="Download file"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg></button></div>
+<div class="file pop"><span class="tile bg-amber" style="width: 38px; height: 38px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">regional_data.xlsx</span><span class="cap">New • 2.4 MB</span></span><button class="ib ib-sm" aria-label="Remove file" style="background: #FBE1E7; border: none; color: #B3261E"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></div>
+<button class="dash row" style="padding: 12px; gap: 10px; cursor: pointer; font: inherit; width: 100%"><span class="tile tile-s bg-soft"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"></path></svg></span><span class="ts" style="color: #7A1426">Upload files</span></button>
+</div>
+<div class="row" style="gap: 10px">
+<a class="btn btn-soft grow" href="TaskActions.dc.html">Cancel</a>
+<button class="btn btn-primary grow" onClick="{{onSave}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"></path></svg>Save changes</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { saved: false }; }
+  renderVals() {
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      saved: this.state.saved,
+      onSave: () => this.setState({ saved: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

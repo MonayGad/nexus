@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>New task</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1000px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" aria-hidden="true"><h1 class="display">Tasks</h1><div class="tabs" style="height: 54px"></div></div>
+<div class="scrim"></div>
+<div class="sheet" role="dialog" aria-label="New task">
+<div class="handle" aria-hidden="true"></div>
+<div class="row"><h2 class="h1 grow">New task</h2><a class="ib" href="Tasks.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></a></div>
+<sc-if value="{{created}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #E3F1EA; color: #2F6B4F"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Task created.</div></sc-if>
+<div class="field">
+<label class="over" for="ttitle">Title</label>
+<div class="{{titleCls}}"><input id="ttitle" placeholder="Task title" value="{{title}}" onChange="{{onTitle}}"></div>
+<sc-if value="{{titleErr}}" hint-placeholder-val="{{ false }}"><span class="err-t">Add a title for this task.</span></sc-if>
+</div>
+<div class="field">
+<label class="over" for="tdesc">Description</label>
+<textarea id="tdesc" class="area" placeholder="Task description" style="min-height: 80px"></textarea>
+</div>
+<div class="field">
+<label class="over" for="tdate">Deadline</label>
+<div class="input"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg><input id="tdate" placeholder="mm/dd/yyyy" value="10/30/2026 • 11:59 PM"></div>
+<span class="cap">Deadline must be in the future.</span>
+</div>
+<div class="row" style="gap: 10px; align-items: flex-end">
+<div class="field grow">
+<span class="over" id="ptsl">Points</span>
+<div class="input" role="group" aria-labelledby="ptsl" style="justify-content: space-between; padding: 0 6px">
+<button class="ib ib-soft ib-sm" aria-label="Fewer points" onClick="{{minus}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
+<span style="font-size: 19px; font-weight: 800; color: #1B1D22">{{points}}</span>
+<button class="ib ib-soft ib-sm" aria-label="More points" onClick="{{plus}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+</div>
+<div class="field grow">
+<span class="over">Visibility</span>
+<div class="tabs" role="tablist" aria-label="Visibility" style="height: 54px">
+<button role="tab" aria-selected="{{pubSel}}" class="{{pubCls}}" onClick="{{setPublic}}">Public</button>
+<button role="tab" aria-selected="{{privSel}}" class="{{privCls}}" onClick="{{setPrivate}}">Private</button>
+</div>
+</div>
+</div>
+<div class="field">
+<span class="over">Attachments</span>
+<button class="dash row" onClick="{{addFile}}" style="padding: 14px; gap: 12px; cursor: pointer; font: inherit; width: 100%; text-align: left">
+<span class="tile bg-soft"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"></path></svg></span>
+<span class="col grow"><span class="ts" style="color: #7A1426">Upload files</span><span class="cap">PDF, images and documents up to 50MB</span></span>
+</button>
+<sc-for list="{{files}}" as="f" hint-placeholder-count="1">
+<div class="file pop"><span class="tile bg-blue" style="width: 38px; height: 38px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">{{f.name}}</span><span class="cap">New • {{f.size}}</span></span><button class="ib ib-sm" aria-label="Remove file" onClick="{{f.remove}}" style="background: #FBE1E7; border: none; color: #B3261E"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></div>
+</sc-for>
+</div>
+<div class="row" style="gap: 10px">
+<a class="btn btn-soft grow" href="Tasks.dc.html">Cancel</a>
+<button class="btn btn-primary grow" onClick="{{onCreate}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Create task</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { title: 'Lab 4 · Classification report', points: 100, pub: true, files: [{ id: 1, name: 'lab4_dataset.csv', size: '1.2 MB' }], tried: false, created: false }; }
+  renderVals() {
+    const ok = this.state.title.trim().length > 0;
+    const err = this.state.tried && !ok;
+    const pub = this.state.pub;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      title: this.state.title,
+      titleCls: err ? 'input err' : 'input focus',
+      titleErr: err,
+      created: this.state.created,
+      points: this.state.points,
+      pubSel: pub ? 'true' : 'false', privSel: pub ? 'false' : 'true',
+      pubCls: pub ? 'tab on' : 'tab', privCls: pub ? 'tab' : 'tab on',
+      files: this.state.files.map((f) => ({ ...f, remove: () => this.setState({ files: this.state.files.filter((x) => x.id !== f.id) }) })),
+      onTitle: (e) => this.setState({ title: e.target.value, created: false }),
+      minus: () => this.setState({ points: Math.max(0, this.state.points - 10) }),
+      plus: () => this.setState({ points: this.state.points + 10 }),
+      setPublic: () => this.setState({ pub: true }),
+      setPrivate: () => this.setState({ pub: false }),
+      addFile: () => this.setState({ files: this.state.files.concat([{ id: Date.now(), name: 'rubric_v2.pdf', size: '640 KB' }]) }),
+      onCreate: () => this.setState({ tried: true, created: ok })
+    };
+  }
+}
+</script>
+</body>
+</html>

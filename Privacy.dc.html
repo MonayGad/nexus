@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Privacy and visibility</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+.opt{height:34px;border-radius:12px;border:1px solid #D6DEE6;background:rgba(255,255,255,.8);font:inherit;font-size:12px;font-weight:700;color:#374151;padding:0 12px;cursor:pointer}
+.opt.on{background:#7A1426;color:#FFFFFF;border-color:#7A1426}
+.sel{height:36px;border-radius:12px;border:none;background:#F6DCDF;color:#5C0F1D;font:inherit;font-size:13px;font-weight:700;padding:0 10px 0 12px;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1040px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="Profile.dc.html" aria-label="Back to profile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<span class="t grow">Privacy &amp; visibility</span>
+</div>
+
+<div class="hero col rise d2" style="gap: 10px">
+<div class="sheen" aria-hidden="true"></div>
+<span class="tile tile-l" style="background: rgba(255,255,255,.2)"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+<span class="h1" style="color: #FFFFFF">Your digital footprint</span>
+<span class="small on-hero">Control who sees your personal information and activity across the network.</span>
+</div>
+
+<div class="col gap10 rise d3">
+<span class="over">Profile visibility</span>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
+<div class="glass col" style="border-radius: 22px; padding: 14px; gap: 10px">
+<div class="row"><span class="{{r.tile}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg></span><span class="col grow"><span class="ts">{{r.label}}</span><span class="cap">Choose who can see this information.</span></span><button class="sel" onClick="{{r.toggle}}" aria-expanded="{{r.exp}}">{{r.value}}<svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></div>
+<sc-if value="{{r.open}}" hint-placeholder-val="{{ false }}"><div class="row wrap gap6 pop"><sc-for list="{{r.opts}}" as="o" hint-placeholder-count="4"><button class="{{o.cls}}" onClick="{{o.pick}}">{{o.label}}</button></sc-for></div></sc-if>
+</div>
+</sc-for>
+</div>
+
+<div class="col gap10 rise d4">
+<span class="over">Interactions</span>
+<div class="glass row" style="border-radius: 22px; padding: 14px; gap: 12px"><span class="tile c-mint"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m2 12 5 5L18 6"></path><path d="m12 16 1 1L23 6"></path></svg></span><span class="col grow"><span class="ts">Read receipts</span><span class="cap">Let others see when you’ve read their messages.</span></span><button class="{{rrCls}}" role="switch" aria-checked="{{rrOn}}" aria-label="Read receipts" onClick="{{toggleRR}}"><i></i></button></div>
+<div class="glass row" style="border-radius: 22px; padding: 14px; gap: 12px"><span class="tile c-blue"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span><span class="col grow"><span class="ts">Discoverability</span><span class="cap">Allow users to find you by searching your @username.</span></span><button class="{{dCls}}" role="switch" aria-checked="{{dOn}}" aria-label="Discoverability" onClick="{{toggleD}}"><i></i></button></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1040}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { open: 'phone', avatar: 'Everyone', phone: 'Contacts', email: 'Friends', rr: true, disc: true }; }
+  renderVals() {
+    const O = ['Everyone', 'Friends', 'Contacts', 'Nobody'];
+    const R = [['avatar', 'Profile avatar', 'tile c-maroon'], ['phone', 'Phone number', 'tile c-mint'], ['email', 'Email address', 'tile c-blue']];
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      rows: R.map(([k, label, tile]) => ({ label, tile, value: this.state[k], open: this.state.open === k, exp: this.state.open === k ? 'true' : 'false',
+        toggle: () => this.setState({ open: this.state.open === k ? null : k }),
+        opts: O.map((o) => ({ label: o, cls: this.state[k] === o ? 'opt on' : 'opt', pick: () => this.setState({ [k]: o, open: null }) })) })),
+      rrCls: this.state.rr ? 'toggle on' : 'toggle', rrOn: this.state.rr ? 'true' : 'false',
+      dCls: this.state.disc ? 'toggle on' : 'toggle', dOn: this.state.disc ? 'true' : 'false',
+      toggleRR: () => this.setState({ rr: !this.state.rr }),
+      toggleD: () => this.setState({ disc: !this.state.disc })
+    };
+  }
+}
+</script>
+</body>
+</html>

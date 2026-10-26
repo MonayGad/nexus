@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workspace announcements</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1180px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div><div class="blob bl5"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="WorkspaceOverview.dc.html" aria-label="Back to workspace"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<div class="col grow"><span class="t">Announcements</span><span class="cap">Data Science Lab</span></div>
+<a class="ib ib-brand" href="CreateAnnouncement.dc.html" aria-label="Create announcement"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></a>
+</div>
+
+<div class="row gap6 rise d2"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true" style="color: #7A1426"><path d="M12 17v5M9 3h6l-1 6 4 4H6l4-4z"></path></svg><span class="over" style="color: #7A1426">Pinned</span></div>
+<div class="hero col rise d2" style="gap: 12px">
+<div class="sheen" aria-hidden="true"></div>
+<div class="row"><span class="av" style="background: #F6DCDF; color: #5C0F1D">HF</span><span class="col grow"><span class="ts" style="color: #FFFFFF">Dr. Hany Fawzy</span><span class="cap on-hero">Oct 24, 2026 • 9:30 AM</span></span><span class="chip c-hero"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17v5M9 3h6l-1 6 4 4H6l4-4z"></path></svg>Pinned</span></div>
+<span class="h2" style="color: #FFFFFF">Midterm room changes</span>
+<span class="small on-hero">Data Science Lab moves to Hall B204 this Thursday. Bring your student ID and a charged laptop.</span>
+<span class="chip c-hero" style="align-self: flex-start"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 12-8.5 8.5a5.5 5.5 0 0 1-7.8-7.8l9-9a3.7 3.7 0 0 1 5.2 5.2l-9 9a1.8 1.8 0 0 1-2.6-2.6L15.5 7"></path></svg>hall_map.pdf</span>
+<div class="row" style="gap: 10px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,.18)"><a class="row gap6 cap" href="AnnouncementComments.dc.html" style="color: #FFFFFF; text-decoration: none; padding-top: 8px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>12 comments</a><span class="grow"></span><a class="cap" href="AnnouncementComments.dc.html" style="color: #F6DCDF; font-weight: 800; text-decoration: none; padding-top: 8px">Add comment</a></div>
+</div>
+
+<h2 class="h2 rise d3">Recent announcements</h2>
+<div class="col gap10">
+<sc-for list="{{posts}}" as="p" hint-placeholder-count="3">
+<article class="glass col pop" style="position: relative; border-radius: 24px; padding: 16px; gap: 10px; animation-delay: {{p.delay}}">
+<div class="row"><span class="{{p.av}}">{{p.i}}</span><span class="col grow"><span class="ts">{{p.author}}</span><span class="cap">{{p.date}}</span></span><button class="ib ib-sm" aria-label="More actions" onClick="{{p.toggle}}" style="background: transparent; border: none; backdrop-filter: none"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button></div>
+<span class="t">{{p.title}}</span>
+<span class="body" style="font-size: 13px">{{p.body}}</span>
+<div class="row" style="gap: 10px"><a class="row gap6 cap" href="AnnouncementComments.dc.html" style="text-decoration: none"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>{{p.comments}} comments</a><span class="grow"></span><a class="link" href="AnnouncementComments.dc.html" style="font-size: 12px">Add comment</a></div>
+<sc-if value="{{p.menu}}" hint-placeholder-val="{{ false }}">
+<div class="menu" style="right: 14px; top: 52px">
+<a href="CreateAnnouncement.dc.html" style="height: 44px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 14px; color: #1B1D22; font-size: 14px; font-weight: 600; text-decoration: none"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>Edit</a>
+<button onClick="{{p.toggle}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17v5M9 3h6l-1 6 4 4H6l4-4z"></path></svg>Pin</button>
+<button onClick="{{askDelete}}" style="color: #B3261E"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"></path></svg>Delete</button>
+</div>
+</sc-if>
+</article>
+</sc-for>
+</div>
+<button class="btn btn-glass btn-block">Load more</button>
+</div>
+
+<sc-if value="{{confirm}}" hint-placeholder-val="{{ false }}">
+<div class="scrim"></div>
+<div class="dialog" role="alertdialog" aria-label="Delete announcement?">
+<div>
+<span class="tile tile-l" style="background: #B3261E"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"></path></svg></span>
+<h2 class="h2">Delete announcement?</h2>
+<p class="body" style="font-size: 13px">This action cannot be undone. All comments and attachments will also be removed.</p>
+<div class="row" style="gap: 10px; width: 100%"><button class="btn btn-soft grow" onClick="{{cancel}}">Cancel</button><button class="btn btn-danger grow" onClick="{{cancel}}">Delete</button></div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { open: 1, confirm: false }; }
+  renderVals() {
+    const P = [
+      { id: 1, i: 'HF', tone: 'c-blue', author: 'Dr. Hany Fawzy', date: 'Oct 23, 2026 • 2:15 PM', title: 'Lab 4 dataset is live', body: 'Download the classification dataset from the task. Office hours move to Wednesday this week.', comments: 4 },
+      { id: 2, i: 'SA', tone: 'c-maroon', author: 'Salma Adel · TA', date: 'Oct 21, 2026 • 6:00 PM', title: 'Study circle on Saturday', body: 'We’ll review modules 3–5 together in the library, room 2. Bring questions!', comments: 9 },
+      { id: 3, i: 'HF', tone: 'c-blue', author: 'Dr. Hany Fawzy', date: 'Oct 18, 2026 • 10:00 AM', title: 'Welcome to Data Science Lab', body: 'Read the syllabus and join the group chat. First quiz is on week 3.', comments: 21 }
+    ];
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      posts: P.map((p, i) => ({ ...p, av: 'av ' + p.tone, delay: (0.2 + i * 0.07).toFixed(2) + 's', menu: this.state.open === p.id, toggle: () => this.setState({ open: this.state.open === p.id ? null : p.id }) })),
+      confirm: this.state.confirm,
+      askDelete: () => this.setState({ confirm: true, open: null }),
+      cancel: () => this.setState({ confirm: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

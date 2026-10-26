@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Voice recording</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+.lw{display:flex;align-items:center;gap:3px;height:30px;flex:1;overflow:hidden}
+.lw i{width:3px;border-radius:2px;background:#E0466A;animation:eq .8s ease-in-out infinite}
+.recdot{position:relative;width:12px;height:12px;flex-shrink:0}
+.recdot span{position:absolute;inset:0;border-radius:50%;background:#B3261E}
+.recdot span+span{animation:ping 1.2s ease-out infinite}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl5"></div></div>
+<header class="row" style="position: absolute; top: 0; left: 0; right: 0; z-index: 3; padding: 50px 14px 12px; gap: 10px; background: rgba(255,255,255,.6); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255,255,255,.85)">
+<a class="ib ib-sm" href="Conversation.dc.html" aria-label="Back to conversation" style="background: transparent; border: none"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<span class="av c-maroon">SA</span>
+<span class="col grow"><span class="ts">Salma Adel</span><span class="cap">Direct chat</span></span>
+</header>
+
+<div class="col" style="position: absolute; top: 116px; bottom: 170px; left: 0; right: 0; padding: 0 14px; gap: 10px; justify-content: flex-end; overflow: hidden">
+<div class="b-them bubble" style="align-self: flex-start; max-width: 80%">Can you explain the residual plot part?</div>
+<div class="col" style="align-self: flex-end; align-items: flex-end; gap: 4px; max-width: 80%">
+<div class="b-me bubble" style="opacity: .75">Sure, sending a voice note</div>
+<span class="row gap4 cap"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Pending</span>
+</div>
+<div class="col" style="align-self: flex-end; align-items: flex-end; gap: 4px; max-width: 80%">
+<div class="b-me row" style="padding: 10px 12px; gap: 10px; opacity: .75; border-radius: 20px 20px 6px 20px"><span class="tile" style="width: 36px; height: 36px; border-radius: 11px; background: rgba(255,255,255,.2)"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col"><span class="ts">residuals.png</span><span class="cap" style="color: #F6DCDF">Document upload failed</span></span></div>
+<button class="chip c-danger" style="border: none; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"></path><path d="M21 3v5h-5"></path></svg>Not sent · Retry</button>
+</div>
+<sc-if value="{{hasNote}}" hint-placeholder-val="{{ false }}"><span class="cap pop" style="align-self: center; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.75); font-weight: 700">{{note}}</span></sc-if>
+</div>
+
+<div class="col" style="position: absolute; left: 12px; right: 12px; bottom: 24px; gap: 8px; z-index: 3">
+<div class="row" style="gap: 10px; padding: 10px 14px; border-radius: 18px; background: #FCEFD6; color: #4A2E05">
+<svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 2l20 20M8.5 16.4a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 5.2-2.8M2 8.8a15 15 0 0 1 4.2-2.6M22 8.8A15 15 0 0 0 10.7 5M12 20h.01"></path></svg>
+<span class="small grow" style="color: #4A2E05; font-weight: 700">2 pending offline messages</span>
+<button class="link" style="border: none; background: none; font: inherit; font-weight: 800; cursor: pointer; padding: 6px 0">Retry all</button>
+</div>
+<sc-if value="{{rec}}" hint-placeholder-val="{{ true }}">
+<div class="row pop" role="group" aria-label="Recording voice message" style="gap: 10px; padding: 8px; border-radius: 26px; border: 1px solid rgba(255,255,255,.85); background: rgba(255,255,255,.8); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: 0 10px 30px rgba(27,29,34,.08)">
+<button class="ib" aria-label="Cancel recording" onClick="{{cancel}}" style="background: #FBE1E7; border: none; color: #B3261E; width: 44px; height: 44px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"></path></svg></button>
+<span class="recdot" aria-hidden="true"><span></span><span></span></span>
+<span class="ts" style="font-variant-numeric: tabular-nums">{{time}}</span>
+<div class="lw" aria-hidden="true"><sc-for list="{{bars}}" as="b" hint-placeholder-count="20"><i style="height: {{b.h}}; animation-delay: {{b.d}}"></i></sc-for></div>
+<button class="ib ib-brand" aria-label="Send voice message" onClick="{{send}}" style="width: 48px; height: 48px; border-radius: 18px; animation: pulse 2s ease-in-out infinite"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4Z"></path></svg></button>
+</div>
+<span class="cap" style="align-self: center">Recording voice message...</span>
+</sc-if>
+<sc-if value="{{idle}}" hint-placeholder-val="{{ false }}">
+<div class="row pop" style="gap: 8px; padding: 8px; border-radius: 26px; border: 1px solid rgba(255,255,255,.85); background: rgba(255,255,255,.7); backdrop-filter: blur(24px)">
+<span class="small grow" style="padding-left: 10px">Write a message...</span>
+<button class="ib ib-brand" aria-label="Record voice message" onClick="{{start}}" style="width: 48px; height: 48px; border-radius: 18px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 17v5"></path></svg></button>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { rec: true, secs: 7, note: '' }; }
+  componentDidMount() { this.t = setInterval(() => { if (this.state.rec) this.setState({ secs: this.state.secs + 1 }); }, 1000); }
+  componentWillUnmount() { clearInterval(this.t); }
+  renderVals() {
+    const H = [10, 18, 26, 14, 22, 30, 12, 20, 28, 16, 10, 24, 18, 26, 12, 20, 14, 28, 18, 10];
+    const s = this.state.secs;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      rec: this.state.rec,
+      idle: !this.state.rec,
+      time: Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'),
+      bars: H.map((h, i) => ({ h: h + 'px', d: (i * 0.04).toFixed(2) + 's' })),
+      hasNote: !!this.state.note,
+      note: this.state.note,
+      cancel: () => this.setState({ rec: false, note: 'Voice recording discarded.' }),
+      send: () => this.setState({ rec: false, note: 'Voice message queued · sends when you’re back online' }),
+      start: () => this.setState({ rec: true, secs: 0, note: '' })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Task comments</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" aria-hidden="true"><h1 class="display">Tasks</h1><div class="glass" style="height: 220px; border-radius: 26px"></div></div>
+<div class="scrim"></div>
+<div class="sheet" role="dialog" aria-label="Comments" style="max-height: 760px">
+<div class="handle" aria-hidden="true"></div>
+<div class="row"><h2 class="h1">Comments</h2><span class="chip c-maroon">{{count}}</span><span class="grow"></span><a class="ib" href="Tasks.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></a></div>
+<div class="col gap14" style="overflow: hidden">
+<sc-for list="{{comments}}" as="c" hint-placeholder-count="3">
+<div class="row pop" style="align-items: flex-start; gap: 10px">
+<span class="{{c.av}}">{{c.i}}</span>
+<div class="col grow" style="gap: 6px; padding: 12px 14px; border-radius: 6px 20px 20px 20px; background: {{c.bg}}; border: 1px solid rgba(255,255,255,.9)">
+<div class="row gap6"><span class="ts">{{c.name}}</span><span class="{{c.roleCls}}">{{c.role}}</span><span class="grow"></span><span class="cap">{{c.time}}</span></div>
+<span class="body" style="font-size: 13px">{{c.text}}</span>
+<sc-if value="{{c.mine}}" hint-placeholder-val="{{ false }}"><div class="row" style="gap: 14px"><button class="link" style="border: none; background: none; padding: 4px 0; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700">Edit</button><button onClick="{{c.del}}" style="border: none; background: none; padding: 4px 0; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; color: #B3261E">Delete</button></div></sc-if>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{none}}" hint-placeholder-val="{{ false }}"><div class="col center" style="padding: 24px; gap: 6px"><span class="t">No comments yet</span><span class="small">Be the first to start the conversation.</span></div></sc-if>
+</div>
+<div class="row" style="gap: 10px; padding: 6px 6px 6px 16px; border-radius: 22px; background: rgba(255,255,255,.95); border: 1px solid #D6DEE6">
+<label class="sr" for="cm">Write a comment</label>
+<input id="cm" placeholder="Write a comment..." value="{{draft}}" onChange="{{onDraft}}" style="flex: 1; min-width: 0; border: none; outline: none; background: transparent; font: inherit; font-size: 15px">
+<button class="ib ib-brand" aria-label="Send comment" onClick="{{onSend}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4Z"></path></svg></button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { draft: '', list: [
+      { id: 1, i: 'YM', tone: 'c-amber', name: 'Youssef M.', role: 'Member', time: '2h ago', text: 'Should the slide deck follow the board template or ours?', mine: false },
+      { id: 2, i: 'NR', tone: 'c-maroon', name: 'You', role: 'Admin', time: '45m ago', text: 'Use the board template. I attached it to the task.', mine: true },
+      { id: 3, i: 'LH', tone: 'c-coral', name: 'Laila H.', role: 'Member', time: 'Just now', text: 'Thanks! Uploading my draft tonight.', mine: false }
+    ] };
+  }
+  renderVals() {
+    const list = this.state.list;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      count: list.length,
+      none: list.length === 0,
+      draft: this.state.draft,
+      comments: list.map((c) => ({ ...c, av: 'av ' + c.tone, bg: c.mine ? '#F6DCDF' : 'rgba(255,255,255,.75)', roleCls: c.role === 'Admin' ? 'chip c-solid' : 'chip c-neutral', del: () => this.setState({ list: this.state.list.filter((x) => x.id !== c.id) }) })),
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      onSend: () => { const t = this.state.draft.trim(); if (!t) return; this.setState({ draft: '', list: list.concat([{ id: Date.now(), i: 'NR', tone: 'c-maroon', name: 'You', role: 'Admin', time: 'Just now', text: t, mine: true }]) }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

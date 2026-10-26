@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workspace overview</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1060px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div><div class="blob bl5"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="Workspaces.dc.html" aria-label="Back to workspaces"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<span class="t grow">Workspace overview</span>
+<sc-if value="{{isStaff}}" hint-placeholder-val="{{ true }}"><a class="ib" href="WorkspaceActions.dc.html" aria-label="More actions"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></a></sc-if>
+<sc-if value="{{isMember}}" hint-placeholder-val="{{ false }}"><a class="ib" href="WorkspaceActions.dc.html" aria-label="Leave workspace"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5M21 12H9"></path></svg></a></sc-if>
+</div>
+
+<div class="hero hero-blue rise d2" style="display: flex; flex-direction: column; gap: 12px; color: #FFFFFF">
+<div class="sheen" aria-hidden="true"></div>
+<div class="row between"><span class="tile" style="background: rgba(255,255,255,.22); width: 52px; height: 52px; border-radius: 18px"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span><span class="chip c-hero">Lab</span></div>
+<span style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em">Data Science Lab</span>
+<span class="small" style="color: #E8EEF8">AID 427 · Information Systems · Dr. Hany Fawzy</span>
+<div class="row" style="gap: 10px">
+<div class="stack"><span class="av av-s c-maroon">SA</span><span class="av av-s c-amber">YM</span><span class="av av-s c-coral">LH</span></div>
+<span class="cap grow" style="color: #FFFFFF">36 students · 3 instructors</span>
+<sc-if value="{{isStaff}}" hint-placeholder-val="{{ true }}"><a class="chip c-neutral" href="InviteCode.dc.html" style="text-decoration: none"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"></circle><path d="m11 12 9-9M17 6l3 3M14 9l2 2"></path></svg>A1B2C3D4</a></sc-if>
+</div>
+</div>
+
+<div class="col gap8 rise d3">
+<span class="over">Previewing as</span>
+<div class="tabs" role="tablist" aria-label="Preview role">
+<sc-for list="{{roles}}" as="r" hint-placeholder-count="3"><button role="tab" aria-selected="{{r.sel}}" class="{{r.cls}}" onClick="{{r.pick}}">{{r.label}}</button></sc-for>
+</div>
+</div>
+
+<div class="row rise d4" style="gap: 10px; align-items: stretch">
+<sc-for list="{{stats}}" as="s" hint-placeholder-count="3">
+<div class="glass col grow pop" style="border-radius: 22px; padding: 14px; gap: 10px">
+<span class="tile tile-s" style="background: {{s.tone}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></span>
+<span class="col"><span style="font-size: 24px; font-weight: 800">{{s.n}}</span><span class="over">{{s.label}}</span></span>
+</div>
+</sc-for>
+</div>
+
+<h2 class="h2 rise d5">Explore</h2>
+<div class="col gap10 rise d6">
+<a class="glass lift row" href="Tasks.dc.html" style="border-radius: 22px; padding: 14px; gap: 14px; text-decoration: none; color: #1B1D22"><span class="tile bg-maroon" style="width: 48px; height: 48px; border-radius: 16px"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="m8.5 12 2.5 2.5 4.5-5"></path></svg></span><span class="col grow gap4"><span class="t">Tasks &amp; Assignments</span><span class="cap">{{taskSub}}</span></span><span class="chip c-pink">3 due</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="color: #4B5563"><path d="m9 18 6-6-6-6"></path></svg></a>
+<a class="glass lift row" href="Announcements.dc.html" style="border-radius: 22px; padding: 14px; gap: 14px; text-decoration: none; color: #1B1D22"><span class="tile bg-coral" style="width: 48px; height: 48px; border-radius: 16px"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"></path><path d="M15 9a4 4 0 0 1 0 6"></path><path d="M18 6a8 8 0 0 1 0 12"></path></svg></span><span class="col grow gap4"><span class="t">Announcements</span><span class="cap">{{annSub}}</span></span><span class="chip c-coral">New</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="color: #4B5563"><path d="m9 18 6-6-6-6"></path></svg></a>
+<a class="glass lift row" href="Members.dc.html" style="border-radius: 22px; padding: 14px; gap: 14px; text-decoration: none; color: #1B1D22"><span class="tile bg-blue" style="width: 48px; height: 48px; border-radius: 16px"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"></circle><path d="M2 21c1-4 3.5-6 7-6s6 2 7 6"></path><path d="M16 4a4 4 0 0 1 0 8M22 21c-.6-2.6-1.8-4.4-3.6-5.3"></path></svg></span><span class="col grow gap4"><span class="t">Members</span><span class="cap">{{memSub}}</span></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="color: #4B5563"><path d="m9 18 6-6-6-6"></path></svg></a>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { role: 'Admin' }; }
+  renderVals() {
+    const role = this.state.role;
+    const staff = role !== 'Member';
+    const stats = staff
+      ? [{ n: 2, label: 'Draft', tone: '#F2A93B' }, { n: 5, label: 'Published', tone: '#5B8DEF' }, { n: 12, label: 'Delivered', tone: '#2F9E6B' }]
+      : [{ n: 3, label: 'To do', tone: '#FF7A59' }, { n: 9, label: 'Completed', tone: '#2F9E6B' }];
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      isStaff: staff,
+      isMember: !staff,
+      roles: ['Admin', 'Moderator', 'Member'].map((r) => ({ label: r, sel: r === role ? 'true' : 'false', cls: r === role ? 'tab on' : 'tab', pick: () => this.setState({ role: r }) })),
+      stats: stats,
+      taskSub: staff ? 'Manage deadlines and deliverables' : 'View deadlines and submit work',
+      annSub: staff ? 'Post updates for members' : 'Recent updates from instructors',
+      memSub: role === 'Admin' ? '36 Students, 3 Instructors · manage roles' : '36 Students, 3 Instructors'
+    };
+  }
+}
+</script>
+</body>
+</html>

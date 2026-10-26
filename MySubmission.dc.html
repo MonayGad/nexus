@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>My submission</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1200px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div><div class="blob bl5"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="TaskDetails.dc.html" aria-label="Back to task"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<div class="col grow"><span class="t">Submissions</span><span class="cap">Midterm Study Guide</span></div>
+</div>
+
+<div class="glass col rise d2" style="border-radius: 26px; padding: 18px; gap: 10px">
+<div class="row gap6"><span class="chip c-mint">Delivered</span><span class="chip c-neutral">Public</span><span class="grow"></span><span class="pts">100 points</span></div>
+<span class="h1">Midterm Study Guide</span>
+<span class="{{dueCls}}" style="align-self: flex-start"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>{{due}}</span>
+<p class="body" style="font-size: 13px">Outline the topics covered in modules 1–6 and draft a practice set for the midterm review session.</p>
+</div>
+
+<div class="col gap10 rise d3">
+<h2 class="h2">My submission</h2>
+<sc-if value="{{isGraded}}" hint-placeholder-val="{{ true }}">
+<div class="hero row" style="gap: 16px">
+<div class="sheen" aria-hidden="true"></div>
+<div style="position: relative; width: 88px; height: 88px; flex-shrink: 0">
+<svg width="88" height="88" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="5"></circle><circle cx="22" cy="22" r="18" fill="none" stroke="#F2A93B" stroke-width="5" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="9" transform="rotate(-90 22 22)" style="animation: ring 1.8s cubic-bezier(.2,.8,.2,1) .3s both"></circle></svg>
+<span class="col center" style="position: absolute; inset: 0"><span style="font-size: 22px; font-weight: 800; color: #FFFFFF">92</span><span class="cap on-hero">/ 100</span></span>
+</div>
+<div class="col grow gap6"><span class="chip c-hero" style="align-self: flex-start">Graded</span><span class="ts" style="color: #FFFFFF">“Strong structure. Add one more worked example for module 4.”</span><span class="cap on-hero">Graded Oct 26, 10:02 AM</span></div>
+</div>
+</sc-if>
+<div class="row" style="gap: 12px; padding: 14px; border-radius: 20px; background: {{bannerBg}}; color: {{bannerFg}}">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="3"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+<span class="col grow"><span class="ts">{{bannerTitle}}</span><span class="cap" style="color: {{bannerFg}}">{{bannerText}}</span></span>
+</div>
+<div class="glass col" style="border-radius: 24px; padding: 14px; gap: 10px">
+<div class="row"><span class="av c-maroon">NR</span><span class="col grow"><span class="ts">You</span><span class="cap">Submitted Oct 25, 8:51 PM</span></span><span class="{{stateChip}}">{{stateLabel}}</span></div>
+<div class="file"><span class="tile bg-pink" style="width: 38px; height: 38px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">study_guide_nour.pdf</span><span class="cap">2.2 MB · Tap to open</span></span><button class="ib ib-soft ib-sm" aria-label="Download study_guide_nour.pdf"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg></button></div>
+</div>
+<sc-if value="{{canEdit}}" hint-placeholder-val="{{ false }}">
+<div class="field"><label class="over" for="note">Note</label><textarea id="note" class="area" placeholder="Add a note for your instructor..." style="min-height: 80px"></textarea><span class="cap">Notes stay on this screen for now.</span></div>
+<a class="btn btn-primary btn-block" href="EditSubmission.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"></path><path d="M4 9h11a5 5 0 0 1 0 10h-3"></path></svg>Resubmit / update submission</a>
+</sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"state":{"editor":"enum","options":["graded","submitted","returned","locked"],"default":"graded"},"$preview":{"width":390,"height":1200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.props.state ?? 'graded';
+    const B = {
+      graded: ['Graded', 'This submission has been graded and is now read-only.', '#E3F1EA', '#2F6B4F', 'chip c-mint', 'Graded'],
+      submitted: ['Submitted', 'You can resubmit or update your work before the deadline.', '#DCE6F2', '#24384F', 'chip c-blue', 'Submitted'],
+      returned: ['Returned', 'Your instructor returned this. Update your work below.', '#FCEFD6', '#4A2E05', 'chip c-amber', 'Returned'],
+      locked: ['Locked — Deadline passed', 'The deadline has passed. This submission is now read-only.', '#FBE1E7', '#B3261E', 'chip c-danger', 'Locked']
+    }[s];
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      isGraded: s === 'graded',
+      canEdit: s === 'submitted' || s === 'returned',
+      due: s === 'locked' ? 'Due Oct 24, 11:59 PM (passed)' : 'Due Oct 28, 11:59 PM',
+      dueCls: s === 'locked' ? 'chip c-danger' : 'chip c-blue',
+      bannerTitle: B[0], bannerText: B[1], bannerBg: B[2], bannerFg: B[3], stateChip: B[4], stateLabel: B[5]
+    };
+  }
+}
+</script>
+</body>
+</html>

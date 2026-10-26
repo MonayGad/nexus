@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workspace code</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+.cbox{width:36px;height:50px;border-radius:13px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#FFFFFF;animation:popin .4s cubic-bezier(.2,.9,.3,1.3) both}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 844px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" aria-hidden="true"><h1 class="display">Members</h1><div class="glass" style="height: 70px; border-radius: 22px"></div><div class="glass" style="height: 70px; border-radius: 22px"></div><div class="glass" style="height: 70px; border-radius: 22px"></div></div>
+<div class="scrim"></div>
+<div class="sheet" role="dialog" aria-label="Workspace code">
+<div class="handle" aria-hidden="true"></div>
+<div class="row"><h2 class="h1 grow">Workspace code</h2><a class="ib" href="Members.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></a></div>
+<div class="hero col center" style="gap: 14px">
+<div class="sheen" aria-hidden="true"></div>
+<span class="tile tile-l" style="background: rgba(255,255,255,.2)"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"></circle><path d="m11 12 9-9M17 6l3 3M14 9l2 2"></path></svg></span>
+<div class="row" style="gap: 6px">
+<span class="cbox" style="animation-delay: .05s">A</span><span class="cbox" style="animation-delay: .1s">1</span><span class="cbox" style="animation-delay: .15s">B</span><span class="cbox" style="animation-delay: .2s">2</span><span class="cbox" style="animation-delay: .25s">C</span><span class="cbox" style="animation-delay: .3s">3</span><span class="cbox" style="animation-delay: .35s">D</span><span class="cbox" style="animation-delay: .4s">4</span>
+</div>
+<span class="small on-hero">Share this code so classmates can join Data Science Lab.</span>
+</div>
+<sc-if value="{{copied}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #E3F1EA; color: #2F6B4F; justify-content: center"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Code copied</div></sc-if>
+<div class="row" style="gap: 10px">
+<a class="btn btn-soft grow" href="Members.dc.html">Close</a>
+<button class="btn btn-primary grow" onClick="{{onCopy}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>Copy code</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { copied: false }; }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      copied: this.state.copied,
+      onCopy: () => { this.setState({ copied: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ copied: false }), 2200); }
+    };
+  }
+}
+</script>
+</body>
+</html>

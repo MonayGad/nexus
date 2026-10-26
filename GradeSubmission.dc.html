@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grade submission</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 960px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
+<div class="page" aria-hidden="true"><div class="hero" style="height: 130px"></div><div class="tabs" style="height: 54px"></div></div>
+<div class="scrim"></div>
+<div class="sheet" role="dialog" aria-label="Grade submission">
+<div class="handle" aria-hidden="true"></div>
+<div class="row"><h2 class="h1 grow">Grade submission</h2><a class="ib" href="Submissions.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></a></div>
+<div class="row glass-hi" style="border-radius: 20px; padding: 12px; gap: 12px"><span class="av c-amber">YM</span><span class="col grow"><span class="ts">Youssef Mahmoud</span><span class="cap">Submitted Oct 25, 9:14 PM</span></span><span class="chip c-blue">Submitted</span></div>
+<div class="field">
+<span class="over">Attachments</span>
+<div class="file"><span class="tile bg-blue" style="width: 38px; height: 38px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">guide_v2.docx</span><span class="cap">780 KB</span></span><button class="ib ib-soft ib-sm" aria-label="Download guide_v2.docx"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg></button></div>
+</div>
+<div class="field">
+<label class="over" for="score">Score</label>
+<div class="{{scoreCls}}"><input id="score" inputmode="numeric" placeholder="Enter score" value="{{score}}" onChange="{{onScore}}" style="font-size: 22px; font-weight: 800"><span class="t" style="color: #4B5563">/ 100</span></div>
+<sc-if value="{{err}}" hint-placeholder-val="{{ false }}"><span class="err-t">Enter a valid grade from 0 to 100.</span></sc-if>
+<div class="bar"><i style="width: {{pct}}"></i></div>
+</div>
+<div class="field">
+<label class="over" for="fb">Feedback comments</label>
+<textarea id="fb" class="area" placeholder="Add constructive feedback..." style="min-height: 96px">Great coverage of modules 1–4. Tighten the practice set answers.</textarea>
+</div>
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #E3F1EA; color: #2F6B4F"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Submission graded.</div></sc-if>
+<button class="btn btn-primary btn-block" onClick="{{onSubmit}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"></path></svg>Submit grade</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":960}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { score: '88', tried: false, done: false }; }
+  renderVals() {
+    const n = Number(this.state.score);
+    const ok = this.state.score !== '' && !isNaN(n) && n >= 0 && n <= 100;
+    const err = this.state.tried && !ok;
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      score: this.state.score,
+      scoreCls: err ? 'input err' : 'input focus',
+      err: err,
+      pct: (ok ? n : 0) + '%',
+      done: this.state.done,
+      onScore: (e) => this.setState({ score: e.target.value.replace(/[^0-9.]/g, ''), done: false }),
+      onSubmit: () => this.setState({ tried: true, done: ok })
+    };
+  }
+}
+</script>
+</body>
+</html>

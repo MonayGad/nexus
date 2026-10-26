@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workspace members</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7A1426}a:hover{color:#4A0D18}
+</style>
+</helmet>
+<div class="phone {{motion}}" style="height: 1080px">
+<div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div><div class="blob bl5"></div></div>
+<div class="page" style="padding-bottom: 40px">
+<div class="row rise">
+<a class="ib" href="WorkspaceOverview.dc.html" aria-label="Back to workspace"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<span class="t grow">Workspace members</span>
+</div>
+<div class="row rise d2" style="align-items: flex-end">
+<div class="col grow gap4"><h1 class="display">Members</h1><span class="small">{{count}} members in Data Science Lab</span></div>
+</div>
+<div class="row rise d3" style="gap: 10px">
+<a class="btn btn-primary grow" href="AddMember.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"></circle><path d="M2 21c1-4 3.5-6 7-6s6 2 7 6"></path><path d="M19 8v6M16 11h6"></path></svg>Invite</a>
+<a class="btn btn-glass grow" href="InviteCode.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"></circle><path d="m11 12 9-9M17 6l3 3M14 9l2 2"></path></svg>Code</a>
+</div>
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}"><div class="status pop" style="background: #E3F1EA; color: #2F6B4F"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>{{toast}}</div></sc-if>
+
+<div class="col gap10">
+<sc-for list="{{members}}" as="m" hint-placeholder-count="6">
+<div class="glass row pop" style="position: relative; border-radius: 22px; padding: 12px 12px 12px 14px; gap: 12px; animation-delay: {{m.delay}}">
+<span class="{{m.av}}">{{m.i}}</span>
+<span class="col grow"><span class="row gap6"><span class="ts">{{m.name}}</span><sc-if value="{{m.me}}" hint-placeholder-val="{{ false }}"><span class="chip c-neutral" style="height: 20px; font-size: 10px">You</span></sc-if></span><span class="cap">{{m.email}}</span></span>
+<span class="{{m.roleCls}}">{{m.role}}</span>
+<button class="ib ib-sm" aria-label="Member actions" onClick="{{m.toggle}}" style="background: transparent; border: none; backdrop-filter: none; width: 30px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+<sc-if value="{{m.open}}" hint-placeholder-val="{{ false }}">
+<div class="menu" style="right: 8px; top: 58px">
+<button onClick="{{m.makeAdmin}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="m2 8 5 4 5-8 5 8 5-4-2 12H4z"></path></svg>Make admin</button>
+<button onClick="{{m.makeMod}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path></svg>Make moderator</button>
+<button onClick="{{m.makeMember}}"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>Make member</button>
+<button onClick="{{m.askRemove}}" style="color: #B3261E"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"></circle><path d="M2 21c1-4 3.5-6 7-6s6 2 7 6"></path><path d="M16 11h6"></path></svg>Remove</button>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+<button class="btn btn-glass btn-block">Load more</button>
+<a class="btn btn-soft btn-block" href="WorkspaceActions.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5M21 12H9"></path></svg>Leave workspace</a>
+</div>
+
+<sc-if value="{{confirm}}" hint-placeholder-val="{{ false }}">
+<div class="scrim"></div>
+<div class="dialog" role="alertdialog" aria-label="Remove member">
+<div>
+<span class="tile tile-l" style="background: #B3261E"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"></circle><path d="M2 21c1-4 3.5-6 7-6s6 2 7 6"></path><path d="M16 11h6"></path></svg></span>
+<h2 class="h2">Remove member</h2>
+<p class="body" style="font-size: 13px">Remove {{removeName}} from this workspace?</p>
+<div class="row" style="gap: 10px; width: 100%"><button class="btn btn-soft grow" onClick="{{cancel}}">Cancel</button><button class="btn btn-danger grow" onClick="{{doRemove}}">Remove</button></div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null, remove: null, toast: '', list: [
+      { id: 1, i: 'NR', tone: 'c-maroon', name: 'Nour Rashad', email: 'nour.r@university.edu', role: 'Admin', me: true },
+      { id: 2, i: 'HF', tone: 'c-blue', name: 'Dr. Hany Fawzy', email: 'h.fawzy@university.edu', role: 'Admin', me: false },
+      { id: 3, i: 'SA', tone: 'c-pink', name: 'Salma Adel', email: 'salma.adel@university.edu', role: 'Moderator', me: false },
+      { id: 4, i: 'YM', tone: 'c-amber', name: 'Youssef Mahmoud', email: 'y.mahmoud@university.edu', role: 'Member', me: false },
+      { id: 5, i: 'LH', tone: 'c-coral', name: 'Laila Hassan', email: 'laila.h@university.edu', role: 'Member', me: false },
+      { id: 6, i: 'OM', tone: 'c-mint', name: 'Omar Kamal', email: 'omar.k@university.edu', role: 'Member', me: false }
+    ] };
+  }
+  renderVals() {
+    const list = this.state.list;
+    const setRole = (m, role) => this.setState({ open: null, toast: m.name + ' is now a ' + role.toLowerCase() + '.', list: this.state.list.map((x) => x.id === m.id ? { ...x, role } : x) });
+    const rm = list.find((x) => x.id === this.state.remove);
+    const rc = { Admin: 'chip c-solid', Moderator: 'chip c-pink', Member: 'chip c-neutral' };
+    return {
+      motion: (this.props.motion ?? true) ? '' : 'still',
+      count: list.length,
+      hasToast: !!this.state.toast,
+      toast: this.state.toast,
+      members: list.map((m, i) => ({ ...m, av: 'av ' + m.tone, delay: (0.2 + i * 0.05).toFixed(2) + 's', roleCls: rc[m.role], open: this.state.open === m.id,
+        toggle: () => this.setState({ open: this.state.open === m.id ? null : m.id }),
+        makeAdmin: () => setRole(m, 'Admin'), makeMod: () => setRole(m, 'Moderator'), makeMember: () => setRole(m, 'Member'),
+        askRemove: () => this.setState({ open: null, remove: m.id }) })),
+      confirm: !!rm,
+      removeName: rm ? rm.name : '',
+      cancel: () => this.setState({ remove: null }),
+      doRemove: () => this.setState({ remove: null, toast: (rm ? rm.name : '') + ' removed.', list: list.filter((x) => x.id !== this.state.remove) })
+    };
+  }
+}
+</script>
+</body>
+</html>
