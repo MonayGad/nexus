@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nexus · All screens</title><link rel="icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--maroon:#7A1426;--ink:#1B1D22;--ink-2:#4B5563;--ground:#EEF0F5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);overflow-x:hidden}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+.b1{width:420px;height:420px;background:#7A1426;opacity:.35;top:-120px;right:-120px}
+.b2{width:360px;height:360px;background:#FF7A59;opacity:.35;top:40%;left:-140px}
+.b3{width:380px;height:380px;background:#5B8DEF;opacity:.3;bottom:-120px;right:10%}
+header{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:56px 16px 24px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo span{width:40px;height:40px;border-radius:13px;background:var(--maroon);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(122,20,38,.35)}
+h1{font-size:clamp(34px,6vw,56px);letter-spacing:-.03em;line-height:1.05;margin:20px 0 10px}
+h1 em{font-style:normal;color:var(--maroon)}
+p.lead{max-width:620px;color:var(--ink-2);font-size:16px;line-height:1.6;margin:0}
+nav{position:sticky;top:0;z-index:5;background:rgba(238,240,245,.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.8)}
+nav div{max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{flex-shrink:0;padding:9px 14px;border-radius:14px;background:rgba(255,255,255,.7);color:var(--ink);text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap}
+nav a:hover{background:var(--maroon);color:#fff}
+section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:40px 16px 8px}
+h2{font-size:26px;letter-spacing:-.02em;margin:0 0 20px}
+.grid{display:flex;flex-wrap:wrap;gap:28px}
+figure{margin:0;display:flex;flex-direction:column;gap:10px}
+.phone{width:302px;border-radius:40px;padding:6px;background:#1B1D22;box-shadow:0 30px 60px rgba(27,29,34,.18)}
+.screen{width:290px;height:627px;border-radius:34px;overflow:hidden;position:relative;background:var(--ground)}
+.screen iframe{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform:scale(.7436);transform-origin:0 0}
+figcaption{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:0 6px}
+figcaption a{font-size:12px;color:var(--maroon);text-decoration:none;font-weight:800}
+footer{position:relative;z-index:1;text-align:center;color:var(--ink-2);font-size:13px;padding:48px 16px}
+@media (max-width:420px){.grid{justify-content:center}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<header>
+<div class="logo"><span>N</span>Nexus Academic System</div>
+<h1>The student app,<br><em>redesigned.</em></h1>
+<p style="margin:0 0 18px"><a href="index.html" style="display:inline-flex;align-items:center;height:46px;padding:0 20px;border-radius:16px;background:#7A1426;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 10px 24px rgba(122,20,38,.3)">Open as app ↗</a></p><p class="lead">Every screen of Nexus, rebuilt with a glassy maroon look. Each phone is live: tap through flows, switch tabs, type into fields. Open any screen full size to see the motion.</p>
+</header>
+<nav aria-label="Flows"><div id="nav"></div></nav>
+<main id="main"></main>
+<footer>Nexus · UI redesign preview</footer>
+<script>
+const M = {"pages": [{"id": "auth", "name": "1 \u00b7 Auth"}, {"id": "home", "name": "2 \u00b7 Home"}, {"id": "workspace", "name": "3 \u00b7 Workspaces"}, {"id": "tasks", "name": "4 \u00b7 Tasks & submissions"}, {"id": "announce", "name": "5 \u00b7 Announcements & members"}, {"id": "chat", "name": "6 \u00b7 Chat"}, {"id": "profile", "name": "7 \u00b7 Profile & privacy"}], "boards": [{"f": "Login.dc.html", "t": "Login", "h": 844, "p": "auth"}, {"f": "VerifyEmail.dc.html", "t": "Verify email (OTP)", "h": 844, "p": "auth"}, {"f": "RestoreAccount.dc.html", "t": "Restore account", "h": 844, "p": "auth"}, {"f": "RestoreOtp.dc.html", "t": "Confirm restore (OTP)", "h": 844, "p": "auth"}, {"f": "DeleteAccountOtp.dc.html", "t": "Confirm deletion (OTP)", "h": 844, "p": "auth"}, {"f": "Home.dc.html", "t": "Home", "h": 1100, "p": "home"}, {"f": "HomeStates.dc.html", "t": "Home \u00b7 empty, offline, loading", "h": 844, "p": "home"}, {"f": "Workspaces.dc.html", "t": "Workspaces", "h": 980, "p": "workspace"}, {"f": "WorkspaceSearch.dc.html", "t": "Search workspaces", "h": 844, "p": "workspace"}, {"f": "CreateWorkspace.dc.html", "t": "Create workspace sheet", "h": 844, "p": "workspace"}, {"f": "JoinWorkspace.dc.html", "t": "Join workspace sheet", "h": 844, "p": "workspace"}, {"f": "EditWorkspace.dc.html", "t": "Edit workspace sheet", "h": 844, "p": "workspace"}, {"f": "WorkspaceOverview.dc.html", "t": "Workspace overview", "h": 1060, "p": "workspace"}, {"f": "WorkspaceActions.dc.html", "t": "Workspace actions + confirm", "h": 844, "p": "workspace"}, {"f": "Tasks.dc.html", "t": "Tasks", "h": 1180, "p": "tasks"}, {"f": "TaskActions.dc.html", "t": "Task actions + delete", "h": 844, "p": "tasks"}, {"f": "NewTask.dc.html", "t": "New task sheet", "h": 1000, "p": "tasks"}, {"f": "EditTask.dc.html", "t": "Edit task sheet", "h": 1000, "p": "tasks"}, {"f": "TaskComments.dc.html", "t": "Comments sheet", "h": 844, "p": "tasks"}, {"f": "TaskDetails.dc.html", "t": "Task details \u00b7 member", "h": 1200, "p": "tasks"}, {"f": "TaskDetailsAdmin.dc.html", "t": "Task details \u00b7 admin", "h": 1000, "p": "tasks"}, {"f": "Submissions.dc.html", "t": "Submission management", "h": 1150, "p": "tasks"}, {"f": "GradeSubmission.dc.html", "t": "Grade submission sheet", "h": 960, "p": "tasks"}, {"f": "MySubmission.dc.html", "t": "My submission", "h": 1200, "p": "tasks"}, {"f": "EditSubmission.dc.html", "t": "Edit submission", "h": 1120, "p": "tasks"}, {"f": "Announcements.dc.html", "t": "Announcements", "h": 1180, "p": "announce"}, {"f": "AnnouncementComments.dc.html", "t": "Announcement comments", "h": 844, "p": "announce"}, {"f": "CreateAnnouncement.dc.html", "t": "Create announcement sheet", "h": 900, "p": "announce"}, {"f": "Members.dc.html", "t": "Members", "h": 1080, "p": "announce"}, {"f": "AddMember.dc.html", "t": "Add member sheet", "h": 844, "p": "announce"}, {"f": "InviteCode.dc.html", "t": "Workspace code sheet", "h": 844, "p": "announce"}, {"f": "Chats.dc.html", "t": "Chats", "h": 1000, "p": "chat"}, {"f": "NewConversation.dc.html", "t": "New conversation", "h": 1040, "p": "chat"}, {"f": "Conversation.dc.html", "t": "Conversation", "h": 844, "p": "chat"}, {"f": "ConversationSearch.dc.html", "t": "Search in conversation", "h": 844, "p": "chat"}, {"f": "MessageActions.dc.html", "t": "Message actions + delete", "h": 844, "p": "chat"}, {"f": "VoiceRecording.dc.html", "t": "Voice recording + offline queue", "h": 844, "p": "chat"}, {"f": "ConversationInfo.dc.html", "t": "Conversation info", "h": 1280, "p": "chat"}, {"f": "AddChatMember.dc.html", "t": "Add chat member sheet", "h": 844, "p": "chat"}, {"f": "SharedMedia.dc.html", "t": "Media, docs and links", "h": 980, "p": "chat"}, {"f": "Profile.dc.html", "t": "Profile", "h": 900, "p": "profile"}, {"f": "EditProfile.dc.html", "t": "Edit profile", "h": 1140, "p": "profile"}, {"f": "Privacy.dc.html", "t": "Privacy and visibility", "h": 1040, "p": "profile"}, {"f": "Logout.dc.html", "t": "Log out dialog", "h": 844, "p": "profile"}, {"f": "Deactivate.dc.html", "t": "Deactivate account dialog", "h": 844, "p": "profile"}]}
+;
+const nav = document.getElementById('nav'), main = document.getElementById('main');
+for (const p of M.pages) {
+  const a = document.createElement('a'); a.href = '#' + p.id; a.textContent = p.name.replace(/^\d+ · /, ''); nav.appendChild(a);
+  const s = document.createElement('section'); s.id = p.id;
+  const h = document.createElement('h2'); h.textContent = p.name.replace(/^\d+ · /, ''); s.appendChild(h);
+  const g = document.createElement('div'); g.className = 'grid'; s.appendChild(g);
+  for (const b of M.boards.filter(x => x.p === p.id)) {
+    const f = document.createElement('figure');
+    const ph = document.createElement('div'); ph.className = 'phone';
+    const sc = document.createElement('div'); sc.className = 'screen';
+    const fr = document.createElement('iframe'); fr.loading = 'lazy'; fr.title = b.t; fr.src = 'screens/' + b.f;
+    sc.appendChild(fr); ph.appendChild(sc); f.appendChild(ph);
+    const c = document.createElement('figcaption');
+    const t = document.createElement('span'); t.textContent = b.t;
+    const o = document.createElement('a'); o.href = 'screens/' + b.f; o.target = '_blank'; o.rel = 'noopener'; o.textContent = 'Open ↗';
+    c.appendChild(t); c.appendChild(o); f.appendChild(c); g.appendChild(f);
+  }
+  main.appendChild(s);
+}
+</script>
+</body>
+</html>
