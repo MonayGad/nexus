@@ -203,3 +203,47 @@
 .phone:has(.nav) .page{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
 .phone:has(.nav)::after{content:"";position:fixed;left:0;right:0;bottom:0;height:110px;pointer-events:none;z-index:19;background:linear-gradient(to top,var(--ground) 30%,transparent)}
 .phone:has(.nav){height:auto !important;min-height:100vh;overflow:clip}
+
+/* ---------- Liquid glass layer (iOS 27 style), same palette ---------- */
+.phone{--lg-blur:blur(28px) saturate(190%);--lg-fill:linear-gradient(150deg,rgba(255,255,255,.66) 0%,rgba(255,255,255,.30) 46%,rgba(255,255,255,.46) 100%);--lg-line:rgba(255,255,255,.6);--lg-rim:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.4),inset 1px 0 0 rgba(255,255,255,.35),inset 0 -14px 24px -16px rgba(255,255,255,.7);--lg-drop:0 14px 34px rgba(122,20,38,.08),0 2px 6px rgba(27,29,34,.05);--lg-spring:cubic-bezier(.3,1.5,.5,1)}
+.phone.dark{--lg-fill:linear-gradient(150deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.04) 48%,rgba(255,255,255,.08) 100%);--lg-line:rgba(255,255,255,.13);--lg-rim:inset 0 1.5px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(255,255,255,.06),inset 1px 0 0 rgba(255,255,255,.08),inset 0 -14px 24px -16px rgba(240,138,160,.18);--lg-drop:0 14px 34px rgba(0,0,0,.38),0 2px 6px rgba(0,0,0,.25)}
+/* neutral glass surfaces */
+.phone .glass,.phone .tabs,.phone .btn-glass,.phone .ib:not(.ib-brand):not(.ib-soft),.phone .file,.phone .actrow:not(.danger),.phone .b-them,.phone.dark .glass,.phone.dark .tabs,.phone.dark .btn-glass,.phone.dark .ib:not(.ib-brand):not(.ib-soft),.phone.dark .file,.phone.dark .actrow:not(.danger),.phone.dark .b-them{background:var(--lg-fill);border-color:var(--lg-line);backdrop-filter:var(--lg-blur);-webkit-backdrop-filter:var(--lg-blur);box-shadow:var(--lg-rim),var(--lg-drop)}
+.phone .glass-hi,.phone.dark .glass-hi{background:var(--lg-fill);border-color:var(--lg-line);backdrop-filter:var(--lg-blur);-webkit-backdrop-filter:var(--lg-blur);box-shadow:var(--lg-rim),var(--lg-drop)}
+.phone .actrow.danger{box-shadow:var(--lg-rim),var(--lg-drop);backdrop-filter:var(--lg-blur);-webkit-backdrop-filter:var(--lg-blur)}
+.phone .input,.phone .area,.phone .otp span{backdrop-filter:var(--lg-blur);-webkit-backdrop-filter:var(--lg-blur);box-shadow:inset 0 1.5px 3px rgba(27,29,34,.06),inset 0 -1px 0 rgba(255,255,255,.7)}
+.phone.dark .input,.phone.dark .area,.phone.dark .otp span{box-shadow:inset 0 1.5px 3px rgba(0,0,0,.3),inset 0 -1px 0 rgba(255,255,255,.06)}
+/* floating chrome: thicker lens */
+.phone .nav,.phone.dark .nav{height:70px;border-radius:999px;background:var(--lg-fill);border-color:var(--lg-line);backdrop-filter:blur(34px) saturate(210%);-webkit-backdrop-filter:blur(34px) saturate(210%);box-shadow:var(--lg-rim),0 18px 44px rgba(122,20,38,.14),0 3px 10px rgba(27,29,34,.08)}
+.phone.dark .nav{box-shadow:var(--lg-rim),0 18px 44px rgba(0,0,0,.5)}
+.phone .nav a{border-radius:999px;transition:background .35s ease,transform .45s var(--lg-spring),padding .45s var(--lg-spring)}
+.phone .sheet,.phone .menu,.phone .dialog>div{backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.9),0 -10px 44px rgba(27,29,34,.14)}
+.phone:not(.dark) .sheet,.phone:not(.dark) .menu,.phone:not(.dark) .dialog>div{background:linear-gradient(170deg,rgba(255,255,255,.88),rgba(255,255,255,.7))}
+.phone.dark .sheet,.phone.dark .menu,.phone.dark .dialog>div{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.16),0 -10px 44px rgba(0,0,0,.5)}
+/* maroon tinted glass: same colour, with light inside it */
+.phone .btn-primary,.phone .ib-brand,.phone .tab.on,.phone .nav a.on,.phone .fab,.phone .unread{background:linear-gradient(180deg,rgba(163,40,61,.95),rgba(122,20,38,.95) 60%,rgba(92,15,29,.95));box-shadow:inset 0 1.5px 0 rgba(255,255,255,.42),inset 0 -2px 6px rgba(0,0,0,.18),0 10px 24px rgba(122,20,38,.3)}
+.phone.dark .btn-primary,.phone.dark .ib-brand,.phone.dark .tab.on,.phone.dark .nav a.on,.phone.dark .fab,.phone.dark .unread{background:linear-gradient(180deg,#CF4561,#B8304A 60%,#962239);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.35),inset 0 -2px 6px rgba(0,0,0,.25),0 10px 26px rgba(184,48,74,.4)}
+.phone .btn-danger{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.35),inset 0 -2px 6px rgba(0,0,0,.18),0 10px 24px rgba(179,38,30,.28)}
+.phone .hero{backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.4),inset 0 -20px 40px -20px rgba(255,255,255,.18),0 20px 44px rgba(122,20,38,.28)}
+.phone .b-me{background:linear-gradient(170deg,rgba(163,40,61,.9),rgba(122,20,38,.9));box-shadow:inset 0 1.5px 0 rgba(255,255,255,.35),0 10px 24px rgba(122,20,38,.22)}
+.phone.dark .b-me{background:linear-gradient(170deg,rgba(207,69,97,.88),rgba(184,48,74,.88))}
+.phone .chip:not(.c-solid):not(.c-hero){box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.phone.dark .chip:not(.c-solid):not(.c-hero){box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.phone .tile,.phone .av{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.35),inset 0 -2px 5px rgba(0,0,0,.08)}
+.phone .toggle i{background:linear-gradient(180deg,#fff,#F4F1F3);box-shadow:inset 0 1px 0 #fff,0 3px 8px rgba(0,0,0,.2)}
+/* liquid motion: elastic press + droplet on the active tab */
+.phone .btn,.phone .ib,.phone .tab,.phone .nav a,.phone .actrow,.phone .lift,.phone .toggle i{transition:transform .45s var(--lg-spring),background .3s ease,box-shadow .3s ease}
+.phone .btn:active,.phone .ib:active,.phone .tab:active,.phone .nav a:active,.phone .actrow:active,.phone a.glass:active{transform:scale(.94)}
+@keyframes droplet{0%{transform:scale(.6,.8);opacity:.4}55%{transform:scale(1.12,.9)}80%{transform:scale(.97,1.04)}100%{transform:none;opacity:1}}
+.phone .nav a.on,.phone .tab.on{animation:droplet .7s var(--lg-spring) both}
+@keyframes lgsheen{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+.phone .nav::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.35) 45%,transparent 60%);background-size:300% 100%;animation:lgsheen 7s ease-in-out infinite;mix-blend-mode:soft-light}
+.phone.still .nav::after{display:none}
+
+/* ---------- Dark mode button (Home + Login, next to notifications) ---------- */
+.phone .theme-ib{overflow:hidden;color:var(--maroon)}
+.phone .theme-ib svg{position:absolute;transition:transform .6s cubic-bezier(.3,1.5,.5,1),opacity .35s ease}
+.phone .theme-ib .sun{opacity:0;transform:rotate(-120deg) scale(.4)}
+.phone.dark .theme-ib{color:#F7B6C4}
+.phone.dark .theme-ib .moon{opacity:0;transform:rotate(120deg) scale(.4)}
+.phone.dark .theme-ib .sun{opacity:1;transform:none}

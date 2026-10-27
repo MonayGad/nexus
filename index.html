@@ -86,7 +86,7 @@ for (const p of M.pages) {
   const b=document.getElementById('themeBtn');
   const get=()=>{try{return localStorage.getItem('nexus-theme')==='dark'}catch(e){return false}};
   const apply=()=>{const d=get();document.documentElement.classList.toggle('dark',d);if(b)b.textContent=d?'Light mode':'Dark mode';};
-  apply();
+  apply();window.nexusApplyTheme=apply;
   if(b)b.addEventListener('click',()=>{try{localStorage.setItem('nexus-theme',get()?'light':'dark')}catch(e){};apply();document.querySelectorAll('iframe').forEach(f=>{try{f.contentWindow.location.reload()}catch(e){f.src=f.src}});});
 })();
 </script>

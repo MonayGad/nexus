@@ -85,11 +85,15 @@ document.getElementById('restart').addEventListener('click', () => { frame.src =
 </script>
 <script>
 (function(){
-  const b=document.getElementById('themeBtn');
+  const b=document.getElementById('themeBtn'), frame=document.getElementById('app');
   const get=()=>{try{return localStorage.getItem('nexus-theme')==='dark'}catch(e){return false}};
-  const apply=()=>{const d=get();document.documentElement.classList.toggle('dark',d);if(b)b.textContent=d?'Light mode':'Dark mode';};
-  apply();
-  if(b)b.addEventListener('click',()=>{try{localStorage.setItem('nexus-theme',get()?'light':'dark')}catch(e){};apply();document.querySelectorAll('iframe').forEach(f=>{try{f.contentWindow.location.reload()}catch(e){f.src=f.src}});});
+  window.nexusApplyTheme=function(){const d=get();document.documentElement.classList.toggle('dark',d);if(b)b.textContent=d?'Light mode':'Dark mode';
+    const m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#120A10':'#EEF0F5';
+    frame.style.background=d?'#120A10':'#EEF0F5';document.getElementById('device').style.background=d?'#120A10':'#EEF0F5';};
+  nexusApplyTheme();
+  frame.addEventListener('load',nexusApplyTheme);
+  if(b)b.addEventListener('click',()=>{try{localStorage.setItem('nexus-theme',get()?'light':'dark')}catch(e){};nexusApplyTheme();
+    try{const w=frame.contentWindow;if(/Profile/.test(w.location.pathname)){w.location.reload()}else{w.document.querySelectorAll('.phone').forEach(p=>p.classList.toggle('dark',get()));const t=w.document.getElementById('nx-theme');if(t)t.classList.toggle('is-dark',get())}}catch(e){frame.src=frame.src}});
 })();
 </script>
 </body>

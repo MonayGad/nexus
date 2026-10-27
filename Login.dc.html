@@ -21,7 +21,8 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 
 <div class="row rise" style="gap: 10px">
 <div class="tile" style="width: 48px; height: 48px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 10px 24px rgba(122,20,38,.18)"><img src="logo-mark.png" alt="Nexus logo" style="width: 34px; height: 34px; object-fit: contain"></div>
-<div class="col"><span class="t">Nexus</span><span class="cap">Academic System</span></div>
+<div class="col grow"><span class="t">Nexus</span><span class="cap">Academic System</span></div>
+<button class="ib theme-ib" aria-label="{{themeLabel}}" aria-pressed="{{themeOn}}" onClick="{{toggleTheme}}"><svg class="ic s24 moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg><svg class="ic s24 sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button>
 </div>
 
 <div class="col gap8 rise d3">
@@ -62,13 +63,21 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { email: '', tried: false }; }
+  constructor(props) { super(props); let dk = false; try { dk = localStorage.getItem('nexus-theme') === 'dark'; } catch (e) {} this.state = { email: '', tried: false, dk }; }
   renderVals() {
     const email = this.state.email;
     const valid = email.trim().length > 0;
     const showError = this.state.tried && !valid;
     return {
-      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
+      motion: ((this.props.motion ?? true) ? '' : 'still') + ((this.props.dark || this.state.dk) ? ' dark' : ''),
+      themeOn: (this.props.dark || this.state.dk) ? 'true' : 'false',
+      themeLabel: (this.props.dark || this.state.dk) ? 'Switch to light mode' : 'Switch to dark mode',
+      toggleTheme: () => {
+        const d = !this.state.dk;
+        try { localStorage.setItem('nexus-theme', d ? 'dark' : 'light'); } catch (e) {}
+        this.setState({ dk: d });
+        try { const w = window.parent; if (w && w !== window && typeof w.nexusApplyTheme === 'function') { w.nexusApplyTheme(); w.document.querySelectorAll('iframe').forEach((f) => { try { f.contentDocument.querySelectorAll('.phone').forEach((p) => p.classList.toggle('dark', d)); } catch (e) {} }); } } catch (e) {}
+      },
       email: email,
       valid: valid,
       invalid: !valid,
