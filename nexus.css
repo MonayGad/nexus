@@ -247,3 +247,14 @@
 .phone.dark .theme-ib{color:#F7B6C4}
 .phone.dark .theme-ib .moon{opacity:0;transform:rotate(120deg) scale(.4)}
 .phone.dark .theme-ib .sun{opacity:1;transform:none}
+
+/* ---------- Smooth transitions ---------- */
+/* theme switch: circular reveal (View Transitions) with a colour cross-fade fallback */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2}
+.phone.theming,.phone.theming *{transition:background-color .6s ease,background .6s ease,color .6s ease,border-color .6s ease,box-shadow .6s ease,opacity .6s ease !important}
+/* every screen eases in */
+@keyframes nxpagein{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.phone>.page{animation:nxpagein .5s cubic-bezier(.2,.8,.2,1) both}
+.phone.still>.page{animation:none}
+@media (prefers-reduced-motion: reduce){.phone>.page{animation:none}}

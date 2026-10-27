@@ -50,6 +50,27 @@ class Component extends DCLogic {
   constructor(props) { super(props); let d = false; try { d = localStorage.getItem('nexus-theme') === 'dark'; } catch (e) {} this.state = { p: 0, darkPref: d }; }
   componentDidMount() { this.t = setInterval(() => { if (this.state.p >= 1) return clearInterval(this.t); this.setState({ p: Math.min(1, this.state.p + 0.08) }); }, 40); }
   componentWillUnmount() { clearInterval(this.t); }
+  nxSwitch(d, ev, after) {
+    const apply = () => {
+      try { localStorage.setItem('nexus-theme', d ? 'dark' : 'light'); } catch (e) {}
+      document.querySelectorAll('.phone').forEach((p) => p.classList.toggle('dark', d));
+      after();
+      try { const w = window.parent; if (w && w !== window && typeof w.nexusApplyTheme === 'function') { w.nexusApplyTheme(); w.document.querySelectorAll('iframe').forEach((f) => { try { if (f.contentWindow !== window) f.contentDocument.querySelectorAll('.phone').forEach((p) => p.classList.toggle('dark', d)); } catch (e) {} }); } } catch (e) {}
+    };
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const el = ev && ev.currentTarget && ev.currentTarget.getBoundingClientRect ? ev.currentTarget : null;
+    const r0 = el ? el.getBoundingClientRect() : null;
+    const x = r0 ? r0.left + r0.width / 2 : window.innerWidth - 40, y = r0 ? r0.top + r0.height / 2 : 80;
+    if (document.startViewTransition && !reduce) {
+      const R = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+      const vt = document.startViewTransition(apply);
+      vt.ready.then(() => document.documentElement.animate({ clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + R + 'px at ' + x + 'px ' + y + 'px)'] }, { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
+    } else {
+      document.querySelectorAll('.phone').forEach((p) => p.classList.add('theming'));
+      apply();
+      setTimeout(() => document.querySelectorAll('.phone').forEach((p) => p.classList.remove('theming')), 700);
+    }
+  }
   renderVals() {
     const fmt = (v) => v >= 1000000 ? (v / 1000000).toFixed(1) + 'M' : v >= 10000 ? Math.round(v / 1000) + 'k' : v >= 1000 ? (v / 1000).toFixed(1) + 'k' : String(Math.round(v));
     const e = 1 - Math.pow(1 - this.state.p, 3);
@@ -58,7 +79,7 @@ class Component extends DCLogic {
       motion: ((this.props.motion ?? true) ? '' : 'still') + ((this.props.dark || this.state.darkPref) ? ' dark' : ''),
       darkCls: (this.props.dark || this.state.darkPref) ? 'toggle on' : 'toggle',
       darkOn: (this.props.dark || this.state.darkPref) ? 'true' : 'false',
-      toggleDark: () => { const v = !this.state.darkPref; try { localStorage.setItem('nexus-theme', v ? 'dark' : 'light'); } catch (e) {} this.setState({ darkPref: v }); },
+      toggleDark: (e) => { const v = !this.state.darkPref; this.nxSwitch(v, e, () => this.setState({ darkPref: v })); },
       stats: S.map(([l, v]) => ({ l, v: fmt(v * e) }))
     };
   }

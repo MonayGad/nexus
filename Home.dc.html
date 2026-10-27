@@ -86,17 +86,33 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 <script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1420}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); let dk = false; try { dk = localStorage.getItem('nexus-theme') === 'dark'; } catch (e) {} this.state = { dk }; }
+  nxSwitch(d, ev, after) {
+    const apply = () => {
+      try { localStorage.setItem('nexus-theme', d ? 'dark' : 'light'); } catch (e) {}
+      document.querySelectorAll('.phone').forEach((p) => p.classList.toggle('dark', d));
+      after();
+      try { const w = window.parent; if (w && w !== window && typeof w.nexusApplyTheme === 'function') { w.nexusApplyTheme(); w.document.querySelectorAll('iframe').forEach((f) => { try { if (f.contentWindow !== window) f.contentDocument.querySelectorAll('.phone').forEach((p) => p.classList.toggle('dark', d)); } catch (e) {} }); } } catch (e) {}
+    };
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const el = ev && ev.currentTarget && ev.currentTarget.getBoundingClientRect ? ev.currentTarget : null;
+    const r0 = el ? el.getBoundingClientRect() : null;
+    const x = r0 ? r0.left + r0.width / 2 : window.innerWidth - 40, y = r0 ? r0.top + r0.height / 2 : 80;
+    if (document.startViewTransition && !reduce) {
+      const R = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+      const vt = document.startViewTransition(apply);
+      vt.ready.then(() => document.documentElement.animate({ clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + R + 'px at ' + x + 'px ' + y + 'px)'] }, { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
+    } else {
+      document.querySelectorAll('.phone').forEach((p) => p.classList.add('theming'));
+      apply();
+      setTimeout(() => document.querySelectorAll('.phone').forEach((p) => p.classList.remove('theming')), 700);
+    }
+  }
   renderVals() {
     return {
       motion: ((this.props.motion ?? true) ? '' : 'still') + ((this.props.dark || this.state.dk) ? ' dark' : ''),
       themeOn: (this.props.dark || this.state.dk) ? 'true' : 'false',
       themeLabel: (this.props.dark || this.state.dk) ? 'Switch to light mode' : 'Switch to dark mode',
-      toggleTheme: () => {
-        const d = !this.state.dk;
-        try { localStorage.setItem('nexus-theme', d ? 'dark' : 'light'); } catch (e) {}
-        this.setState({ dk: d });
-        try { const w = window.parent; if (w && w !== window && typeof w.nexusApplyTheme === 'function') { w.nexusApplyTheme(); w.document.querySelectorAll('iframe').forEach((f) => { try { f.contentDocument.querySelectorAll('.phone').forEach((p) => p.classList.toggle('dark', d)); } catch (e) {} }); } } catch (e) {}
-      },
+      toggleTheme: (e) => this.nxSwitch(!this.state.dk, e, () => this.setState({ dk: !this.state.dk })),
       circles: [
         { init: 'DS', name: 'Data Lab', cls: 'av c-blue', ring: 'conic-gradient(#5B8DEF,#4F6D8F,#5B8DEF)', speed: '7s' },
         { init: 'ML', name: 'ML core', cls: 'av c-pink', ring: 'conic-gradient(#E0466A,#F2A93B,#E0466A)', speed: '5s' },
