@@ -17,26 +17,15 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </helmet>
 <div class="phone {{motion}}" style="height: 844px">
 <div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
-<div class="page" style="gap: 22px; padding-top: 60px">
+<div class="page" style="gap: 26px; padding-top: 72px">
 
 <div class="row rise" style="gap: 10px">
 <div class="tile" style="width: 48px; height: 48px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 10px 24px rgba(122,20,38,.18)"><img src="logo-mark.png" alt="Nexus logo" style="width: 34px; height: 34px; object-fit: contain"></div>
 <div class="col"><span class="t">Nexus</span><span class="cap">Academic System</span></div>
 </div>
 
-<div class="hero rise d2" style="display: flex; flex-direction: column; gap: 14px">
-<div class="sheen" aria-hidden="true"></div>
-<div class="row gap6">
-<span class="chip c-hero"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>Classes</span>
-<span class="chip c-hero"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Tasks</span>
-<span class="chip c-hero"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Chat</span>
-</div>
-<p class="h1" style="color: #FFFFFF">Everything for your semester, in one place.</p>
-<div class="row gap6" aria-hidden="true"><span style="width: 90px; height: 6px; border-radius: 3px; background: #FF7A59"></span><span style="width: 60px; height: 6px; border-radius: 3px; background: #F2A93B"></span><span style="width: 40px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.35)"></span></div>
-</div>
-
 <div class="col gap8 rise d3">
-<h1 class="big">Welcome<br><span style="color: #7A1426">back.</span></h1>
+<h1 class="big" style="font-size: 40px; margin-top: 36px">Welcome<br><span style="color: #7A1426">back.</span></h1>
 <p class="body">Sign in with your university credentials</p>
 </div>
 
@@ -71,7 +60,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { email: '', tried: false }; }
   renderVals() {
@@ -79,7 +68,7 @@ class Component extends DCLogic {
     const valid = email.trim().length > 0;
     const showError = this.state.tried && !valid;
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       email: email,
       valid: valid,
       invalid: !valid,

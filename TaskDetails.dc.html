@@ -65,16 +65,16 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1200}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1200}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { files: [{ id: 1, name: 'q3_analysis_nour.pptx', size: '4.6 MB' }], tried: false, sent: false, secs: 4 * 3600 + 12 * 60 }; }
+  constructor(props) { super(props); this.state = { files: [{ id: 1, name: 'q3_analysis_monay.pptx', size: '4.6 MB' }], tried: false, sent: false, secs: 4 * 3600 + 12 * 60 }; }
   componentDidMount() { this.t = setInterval(() => this.setState({ secs: Math.max(0, this.state.secs - 60) }), 60000); }
   componentWillUnmount() { clearInterval(this.t); }
   renderVals() {
     const files = this.state.files;
     const h = Math.floor(this.state.secs / 3600), m = Math.floor((this.state.secs % 3600) / 60);
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       left: h + 'h ' + m + 'm',
       open: !this.state.sent,
       sent: this.state.sent,

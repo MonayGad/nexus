@@ -27,7 +27,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 
 <div class="col center rise d2" style="gap: 10px">
 <button onClick="{{onPhoto}}" aria-label="Change profile photo" style="position: relative; width: 112px; height: 112px; border: none; background: none; padding: 0; cursor: pointer">
-<span class="ringwrap" style="position: absolute; inset: 0"><span class="ring" aria-hidden="true"></span><span class="av c-maroon" style="font-size: 34px">NR</span></span>
+<span class="ringwrap" style="position: absolute; inset: 0"><span class="ring" aria-hidden="true"></span><span class="av c-maroon" style="font-size: 34px">MG</span></span>
 <sc-if value="{{uploading}}" hint-placeholder-val="{{ false }}"><span class="skel" style="position: absolute; inset: 6px; border-radius: 50%; opacity: .85"></span></sc-if>
 <span class="tile" style="position: absolute; right: 0; bottom: 4px; width: 36px; height: 36px; border-radius: 12px; background: #7A1426; color: #FFFFFF; border: 3px solid #EEF0F5"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span>
 </button>
@@ -36,7 +36,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 
 <div class="glass col rise d3" style="border-radius: 26px; padding: 18px; gap: 16px">
 <div class="field"><label class="over" for="dn">Display name</label><div class="{{nameCls}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg><input id="dn" value="{{name}}" onChange="{{onName}}"></div></div>
-<div class="field"><label class="over" for="un">Username</label><div class="input"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path></svg><input id="un" value="nour.r"></div></div>
+<div class="field"><label class="over" for="un">Username</label><div class="input"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path></svg><input id="un" value="monay.g"></div></div>
 <div class="field"><label class="over" for="bio">Bio</label><textarea id="bio" class="area" style="min-height: 92px" value="{{bio}}" onChange="{{onBio}}"></textarea><div class="row between"><span class="cap">Shown on your profile</span><span class="{{countCls}}">{{count}} / 150</span></div></div>
 <div class="field"><label class="over" for="dob">Date of birth</label><div class="input"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg><input id="dob" placeholder="Select date" value="03/14/2004"></div></div>
 </div>
@@ -49,14 +49,14 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1140}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1140}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { name: 'Nour Rashad', bio: 'Data science student. Building agents, sketching interfaces, collecting good coffee.', msg: '', ok: true, uploading: false }; }
+  constructor(props) { super(props); this.state = { name: 'Monay Gad', bio: 'Data science student. Building agents, sketching interfaces, collecting good coffee.', msg: '', ok: true, uploading: false }; }
   componentWillUnmount() { clearTimeout(this.t); }
   renderVals() {
     const len = this.state.bio.length;
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       name: this.state.name,
       nameCls: this.state.name.trim() ? 'input' : 'input err',
       bio: this.state.bio,

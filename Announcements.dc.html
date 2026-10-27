@@ -68,7 +68,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1180}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1180}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { open: 1, confirm: false }; }
   renderVals() {
@@ -78,7 +78,7 @@ class Component extends DCLogic {
       { id: 3, i: 'HF', tone: 'c-blue', author: 'Dr. Hany Fawzy', date: 'Oct 18, 2026 • 10:00 AM', title: 'Welcome to Data Science Lab', body: 'Read the syllabus and join the group chat. First quiz is on week 3.', comments: 21 }
     ];
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       posts: P.map((p, i) => ({ ...p, av: 'av ' + p.tone, delay: (0.2 + i * 0.07).toFixed(2) + 's', menu: this.state.open === p.id, toggle: () => this.setState({ open: this.state.open === p.id ? null : p.id }) })),
       confirm: this.state.confirm,
       askDelete: () => this.setState({ confirm: true, open: null }),

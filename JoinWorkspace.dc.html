@@ -54,13 +54,13 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { code: 'A1B2C3', tried: false, joined: false }; }
   renderVals() {
     const code = this.state.code;
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       code: code,
       boxes: [0, 1, 2, 3, 4, 5, 6, 7].map((i) => ({ c: code[i] || '', cls: i < code.length ? '' : (i === code.length ? 'cur' : 'e') })),
       err: this.state.tried && code.length !== 8,

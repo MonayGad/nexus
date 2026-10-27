@@ -66,7 +66,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { rec: true, secs: 7, note: '' }; }
   componentDidMount() { this.t = setInterval(() => { if (this.state.rec) this.setState({ secs: this.state.secs + 1 }); }, 1000); }
@@ -75,7 +75,7 @@ class Component extends DCLogic {
     const H = [10, 18, 26, 14, 22, 30, 12, 20, 28, 16, 10, 24, 18, 26, 12, 20, 14, 28, 18, 10];
     const s = this.state.secs;
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       rec: this.state.rec,
       idle: !this.state.rec,
       time: Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'),

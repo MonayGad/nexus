@@ -21,7 +21,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 <div class="row rise">
 <a class="ib" href="WorkspaceOverview.dc.html" aria-label="Back to workspace"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
 <div class="col grow"><span class="t">Data Science Lab</span><span class="cap">Workspace tasks</span></div>
-<a class="av c-maroon" href="Profile.dc.html" aria-label="Your profile" style="text-decoration: none">NR</a>
+<a class="av c-maroon" href="Profile.dc.html" aria-label="Your profile" style="text-decoration: none">MG</a>
 </div>
 
 <div class="row rise d2" style="align-items: flex-end">
@@ -68,7 +68,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"role":{"editor":"enum","options":["admin","member"],"default":"admin"},"$preview":{"width":390,"height":1180}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"role":{"editor":"enum","options":["admin","member"],"default":"admin"},"$preview":{"width":390,"height":1180}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { tab: 'all' }; }
   renderVals() {
@@ -79,7 +79,7 @@ class Component extends DCLogic {
     const A = [
       { k: 'draft', rail: '#E0466A', chips: [ch('c-neutral', 'Public'), ch('c-amber', 'Draft'), ch('c-pink', 'Today')], title: 'Q3 Financial Report Analysis', desc: 'Compile data from all regional offices and prepare the preliminary slide deck for the board meeting.', status: '', av: [av('c-maroon', 'SA'), av('c-amber', 'YM')], comments: 3, points: 150 },
       { k: 'delivered', rail: '#5B8DEF', chips: [ch('c-neutral', 'Public'), ch('c-mint', 'Delivered'), ch('c-blue', 'Oct 28')], title: 'Midterm Study Guide', desc: 'Outline the topics covered in modules 1–6 and draft a practice set for the midterm review session.', status: 'Published Oct 24 · 18 of 36 submitted', sBg: '#E3F1EA', sFg: '#2F6B4F', av: [av('c-coral', 'LH'), av('c-blue', 'OM')], comments: 7, points: 100 },
-      { k: 'draft', rail: '#4F6D8F', chips: [ch('c-neutral', 'Private'), ch('c-amber', 'Draft'), ch('c-neutral', 'Oct 30')], title: 'Update Brand Guidelines', desc: 'Incorporate new Nexus Red color values and typography scale into the central Figma library.', status: '', av: [av('c-maroon', 'NR')], comments: 0, points: 50 },
+      { k: 'draft', rail: '#4F6D8F', chips: [ch('c-neutral', 'Private'), ch('c-amber', 'Draft'), ch('c-neutral', 'Oct 30')], title: 'Update Brand Guidelines', desc: 'Incorporate new Nexus Red color values and typography scale into the central Figma library.', status: '', av: [av('c-maroon', 'MG')], comments: 0, points: 50 },
       { k: 'delivered', rail: '#2F9E6B', chips: [ch('c-neutral', 'Public'), ch('c-mint', 'Delivered'), ch('c-neutral', 'Oct 20')], title: 'Lab 3 · Regression Diagnostics', desc: 'Run residual plots on the Auto MPG dataset and explain each assumption.', status: 'Published Oct 14 · 34 of 36 submitted', sBg: '#E3F1EA', sFg: '#2F6B4F', av: [av('c-blue', 'OM')], comments: 2, points: 40 }
     ];
     const M = [
@@ -94,7 +94,7 @@ class Component extends DCLogic {
     const list = src.filter((x) => valid === 'all' || x.k === valid).map((x, i) => ({ ...x, hasStatus: !!x.status, href: admin ? 'TaskDetailsAdmin.dc.html' : 'TaskDetails.dc.html', delay: (0.15 + i * 0.07).toFixed(2) + 's' }));
     const empties = { draft: ['No drafts', 'New tasks stay here until you deliver them.'], delivered: ['No tasks yet', 'Create your first task to get started.'], todo: ['All caught up', 'No pending tasks for you right now.'], submitted: ['Nothing here yet', 'Tasks you have submitted will appear here.'], all: ['No tasks yet', 'Tasks your instructor publishes will appear here.'] };
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       isAdmin: admin,
       subtitle: admin ? 'Manage workspace deliverables.' : 'View and submit your deliverables.',
       tabs: tabsDef.map(([id, label]) => ({ label, n: id === 'all' ? src.length : src.filter((x) => x.k === id).length, sel: valid === id ? 'true' : 'false', cls: valid === id ? 'tab on' : 'tab', pick: () => this.setState({ tab: id }) })),

@@ -140,3 +140,66 @@
 .actrow.danger{background:rgba(251,225,231,.7)}
 .unread{min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:var(--maroon);color:#fff;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
 .fab{position:absolute;right:20px;bottom:112px;width:60px;height:60px;border-radius:22px;border:none;background:var(--maroon);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;animation:pulse 2.6s ease-in-out infinite;z-index:4}
+
+/* ---------- Dark mode: "Midnight maroon" ---------- */
+.phone.dark{--maroon:#B8304A;--maroon-900:#FFB4C0;--maroon-500:#E0466A;--maroon-100:rgba(224,70,106,.18);--maroon-ink:#F7B6C4;--ground:#120A10;--ink:#F4EEF1;--ink-2:#CFC6D0;--ink-3:#A89EAB;--line:rgba(255,255,255,.14);--danger:#E5484D;--glass:rgba(255,255,255,.06);--glass-line:rgba(255,255,255,.12);color-scheme:dark}
+.phone.dark .bl1{background:#B8304A;opacity:.45}
+.phone.dark .bl2{opacity:.28}.phone.dark .bl3{background:#6E5BEF;opacity:.32}.phone.dark .bl4{opacity:.22}.phone.dark .bl5{opacity:.3}
+.phone.dark .glass,.phone.dark .tabs,.phone.dark .ib:not(.ib-brand):not(.ib-soft),.phone.dark .btn-glass{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:var(--ink)}
+.phone.dark .glass-hi,.phone.dark .file,.phone.dark .actrow{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:var(--ink)}
+.phone.dark .actrow.danger{background:rgba(229,72,77,.14)}
+.phone.dark .hero{background:rgba(184,48,74,.5);border-color:rgba(255,255,255,.14);box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.phone.dark .hero-blue{background:linear-gradient(135deg,#3B5BB5,#2E3F5C)}
+.phone.dark .btn-primary{background:#B8304A;box-shadow:0 10px 28px rgba(184,48,74,.45)}
+.phone.dark .ib-brand,.phone.dark .fab,.phone.dark .tab.on,.phone.dark .nav a.on,.phone.dark .c-solid,.phone.dark .bg-maroon,.phone.dark .toggle.on{background:#B8304A}
+.phone.dark .btn-soft,.phone.dark .ib-soft,.phone.dark .bg-soft,.phone.dark .pts{background:rgba(224,70,106,.18);color:#F7B6C4}
+.phone.dark .btn-white{background:#FFFFFF;color:#7A1426}
+.phone.dark .link{color:#F08AA0}
+.phone.dark .c-maroon{background:rgba(224,70,106,.18);color:#F7B6C4}.phone.dark .c-pink{background:rgba(224,70,106,.2);color:#FFB3C4}
+.phone.dark .c-coral{background:rgba(255,122,89,.18);color:#FFC2B0}.phone.dark .c-amber{background:rgba(242,169,59,.18);color:#F7D49B}
+.phone.dark .c-blue{background:rgba(110,150,255,.18);color:#BCD0FF}.phone.dark .c-mint{background:rgba(47,158,107,.2);color:#9EE0C0}
+.phone.dark .c-neutral{background:rgba(255,255,255,.1);color:#E5DEE7}.phone.dark .c-danger{background:rgba(229,72,77,.2);color:#FFB4AB}
+.phone.dark .av{border-color:#120A10}
+.phone.dark .input,.phone.dark .area{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:var(--ink-3)}
+.phone.dark .input input,.phone.dark .input select,.phone.dark .area,.phone.dark input,.phone.dark textarea{color:var(--ink)}
+.phone.dark input::placeholder,.phone.dark textarea::placeholder{color:#8E8492}
+.phone.dark .input:focus-within,.phone.dark .input.focus{border-color:#E0466A;background:rgba(255,255,255,.09);color:#F08AA0}
+.phone.dark .dash{background:rgba(255,255,255,.04);border-color:rgba(240,138,160,.45)}
+.phone.dark .nav{background:rgba(30,18,26,.72);border-color:rgba(255,255,255,.1);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.phone.dark .nav a{color:#A89EAB}.phone.dark .nav a.on{color:#fff}.phone.dark .nav .dot{border-color:#1E121A}
+.phone.dark .sheet,.phone.dark .dialog>div,.phone.dark .menu{background:rgba(28,16,24,.94);border-color:rgba(255,255,255,.1);box-shadow:0 -10px 40px rgba(0,0,0,.5);color:var(--ink)}
+.phone.dark .menu button{color:var(--ink)}.phone.dark .menu button:hover{background:rgba(224,70,106,.16)}
+.phone.dark .scrim{background:rgba(0,0,0,.5)}
+.phone.dark .handle{background:rgba(255,255,255,.25)}
+.phone.dark .otp span{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:var(--ink)}
+.phone.dark .otp span.e{background:rgba(255,255,255,.04)}.phone.dark .otp span.cur{border-color:#E0466A}.phone.dark .otp span.cur::after{background:#E0466A}
+.phone.dark .b-them{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:var(--ink)}
+.phone.dark .b-me{background:rgba(184,48,74,.85)}
+.phone.dark .toggle{background:rgba(255,255,255,.18)}
+.phone.dark .skel{background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.12),rgba(255,255,255,.04));background-size:400px 100%}
+.phone.dark .bar{background:rgba(255,255,255,.1)}
+.phone.dark .divider{background:rgba(255,255,255,.1)}
+.phone.dark .ringwrap .av{border-color:#120A10}
+/* inline colours written into the screens, as the runtime serialises them */
+.phone.dark [style*="color: rgb(27, 29, 34)"]{color:#F4EEF1 !important}
+.phone.dark [style*="color: rgb(75, 85, 99)"],.phone.dark [style*="color: rgb(55, 65, 81)"]{color:#A89EAB !important}
+.phone.dark [style*="color: rgb(122, 20, 38)"]{color:#F08AA0 !important}
+.phone.dark [style*="color: rgb(179, 38, 30)"]{color:#FF8A80 !important}
+.phone.dark [style*="color: rgb(47, 107, 79)"]{color:#9EE0C0 !important}
+.phone.dark [style*="color: rgb(36, 56, 79)"]{color:#BCD0FF !important}
+.phone.dark [style*="color: rgb(74, 46, 5)"]{color:#F7D49B !important}
+.phone.dark [style*="color: rgb(92, 15, 29)"],.phone.dark [style*="color: rgb(74, 13, 24)"]{color:#F7B6C4 !important}
+.phone.dark [style*="background: rgb(227, 241, 234)"]{background:rgba(47,158,107,.2) !important}
+.phone.dark [style*="background: rgb(251, 225, 231)"],.phone.dark [style*="background: rgba(251, 225, 231"]{background:rgba(229,72,77,.18) !important}
+.phone.dark [style*="background: rgb(246, 220, 223)"]{background:rgba(224,70,106,.16) !important}
+.phone.dark [style*="background: rgb(220, 230, 242)"]{background:rgba(110,150,255,.16) !important}
+.phone.dark [style*="background: rgb(252, 239, 214)"]{background:rgba(242,169,59,.16) !important}
+.phone.dark [style*="background: rgb(238, 240, 245)"]{background:#120A10 !important}
+.phone.dark [style*="background: rgba(255, 255, 255, 0.5"],.phone.dark [style*="background: rgba(255, 255, 255, 0.6"],.phone.dark [style*="background: rgba(255, 255, 255, 0.7"],.phone.dark [style*="background: rgba(255, 255, 255, 0.8"],.phone.dark [style*="background: rgba(255, 255, 255, 0.9"]{background:rgba(30,18,26,.6) !important;border-color:rgba(255,255,255,.12) !important}
+.phone.dark [style*="border: 3px solid rgb(238, 240, 245)"],.phone.dark [style*="border-color: rgb(238, 240, 245)"]{border-color:#120A10 !important}
+/* bottom bar pinned to the screen, content always clears it */
+.nav{position:fixed;left:50%;right:auto;width:350px;margin-left:-175px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20}
+.fab{position:fixed;left:50%;right:auto;margin-left:115px;bottom:calc(104px + env(safe-area-inset-bottom,0px));z-index:20}
+.phone:has(.nav) .page{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+.phone:has(.nav)::after{content:"";position:fixed;left:0;right:0;bottom:0;height:110px;pointer-events:none;z-index:19;background:linear-gradient(to top,var(--ground) 30%,transparent)}
+.phone:has(.nav){height:auto !important;min-height:100vh;overflow:clip}

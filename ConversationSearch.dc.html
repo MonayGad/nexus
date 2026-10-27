@@ -39,7 +39,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { q: 'module', idx: 1 }; }
   renderVals() {
@@ -57,7 +57,7 @@ class Component extends DCLogic {
     const idx = n ? Math.min(this.state.idx, n - 1) : 0;
     const cur = n ? hits[idx] : -1;
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       q: this.state.q,
       status: !q ? 'Type to search messages' : (n ? (idx + 1) + ' of ' + n + ' matches' : 'No matching messages'),
       msgs: M.map((m, i) => ({ who: m.who, text: m.text, align: m.me ? 'flex-end' : 'flex-start', op: !q || hits.includes(i) ? 1 : 0.45, cls: (m.me ? 'bubble b-me' : 'bubble b-them') + (i === cur ? ' hit' : '') })),

@@ -66,12 +66,12 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1080}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1080}}'>
 class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = { open: null, remove: null, toast: '', list: [
-      { id: 1, i: 'NR', tone: 'c-maroon', name: 'Nour Rashad', email: 'nour.r@university.edu', role: 'Admin', me: true },
+      { id: 1, i: 'MG', tone: 'c-maroon', name: 'Monay Gad', email: 'monay.g@university.edu', role: 'Admin', me: true },
       { id: 2, i: 'HF', tone: 'c-blue', name: 'Dr. Hany Fawzy', email: 'h.fawzy@university.edu', role: 'Admin', me: false },
       { id: 3, i: 'SA', tone: 'c-pink', name: 'Salma Adel', email: 'salma.adel@university.edu', role: 'Moderator', me: false },
       { id: 4, i: 'YM', tone: 'c-amber', name: 'Youssef Mahmoud', email: 'y.mahmoud@university.edu', role: 'Member', me: false },
@@ -85,7 +85,7 @@ class Component extends DCLogic {
     const rm = list.find((x) => x.id === this.state.remove);
     const rc = { Admin: 'chip c-solid', Moderator: 'chip c-pink', Member: 'chip c-neutral' };
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       count: list.length,
       hasToast: !!this.state.toast,
       toast: this.state.toast,

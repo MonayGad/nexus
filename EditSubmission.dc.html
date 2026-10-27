@@ -36,7 +36,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 
 <div class="glass col rise d3" style="border-radius: 24px; padding: 16px; gap: 12px">
 <span class="over">Existing submission</span>
-<div class="row"><span class="av c-maroon">NR</span><span class="col grow"><span class="ts">You</span><span class="cap">Submitted Oct 25, 8:51 PM</span></span><span class="chip c-blue">Submitted</span></div>
+<div class="row"><span class="av c-maroon">MG</span><span class="col grow"><span class="ts">You</span><span class="cap">Submitted Oct 25, 8:51 PM</span></span><span class="chip c-blue">Submitted</span></div>
 </div>
 
 <div class="col gap10 rise d4">
@@ -62,13 +62,13 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1120}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1120}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { saved: false, files: [{ id: 1, name: 'study_guide_nour.pdf', meta: 'Current · 2.2 MB', tone: '#E0466A' }, { id: 2, name: 'practice_set.docx', meta: 'New • 420 KB', tone: '#5B8DEF' }] }; }
+  constructor(props) { super(props); this.state = { saved: false, files: [{ id: 1, name: 'study_guide_monay.pdf', meta: 'Current · 2.2 MB', tone: '#E0466A' }, { id: 2, name: 'practice_set.docx', meta: 'New • 420 KB', tone: '#5B8DEF' }] }; }
   renderVals() {
     const files = this.state.files;
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       saved: this.state.saved,
       none: files.length === 0,
       files: files.map((f) => ({ ...f, remove: () => this.setState({ saved: false, files: this.state.files.filter((x) => x.id !== f.id) }), replace: () => this.setState({ saved: false, files: this.state.files.map((x) => x.id === f.id ? { ...x, name: 'v2_' + x.name, meta: 'New • replaced' } : x) }) })),

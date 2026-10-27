@@ -42,7 +42,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":960}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":960}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { score: '88', tried: false, done: false }; }
   renderVals() {
@@ -50,7 +50,7 @@ class Component extends DCLogic {
     const ok = this.state.score !== '' && !isNaN(n) && n >= 0 && n <= 100;
     const err = this.state.tried && !ok;
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       score: this.state.score,
       scoreCls: err ? 'input err' : 'input focus',
       err: err,

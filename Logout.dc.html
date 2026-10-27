@@ -18,7 +18,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 <div class="phone {{motion}}" style="height: 844px">
 <div class="blobs" aria-hidden="true"><div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div><div class="blob bl4"></div></div>
 <div class="page" aria-hidden="true">
-<div class="col center" style="gap: 10px; padding-top: 50px"><div class="av c-maroon" style="width: 112px; height: 112px; font-size: 34px">NR</div><h1 class="display">Nour Rashad</h1></div>
+<div class="col center" style="gap: 10px; padding-top: 50px"><div class="av c-maroon" style="width: 112px; height: 112px; font-size: 34px">MG</div><h1 class="display">Monay Gad</h1></div>
 <div class="glass" style="height: 80px; border-radius: 24px"></div>
 <div class="glass" style="height: 72px; border-radius: 20px"></div>
 </div>
@@ -33,10 +33,10 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
-    return { motion: (this.props.motion ?? true) ? '' : 'still' };
+    return { motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : '') };
   }
 }
 </script>

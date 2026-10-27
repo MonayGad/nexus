@@ -90,7 +90,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { draft: '', reply: null, playing: false, mine: [] }; }
   renderVals() {
@@ -98,7 +98,7 @@ class Component extends DCLogic {
     const playing = this.state.playing;
     const reply = this.state.reply;
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       listBottom: reply ? '160px' : '100px',
       bars: H.map((h, i) => ({ h: h + 'px', anim: playing ? 'eq .9s ease-in-out ' + (i * 0.05).toFixed(2) + 's infinite' : 'none' })),
       playing: playing, paused: !playing,

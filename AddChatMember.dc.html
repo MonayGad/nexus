@@ -50,7 +50,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { q: 'la', ask: null, added: [], toast: '' }; }
   renderVals() {
@@ -64,7 +64,7 @@ class Component extends DCLogic {
     const res = q.length >= 2 ? U.filter((u) => (u.name + u.handle).toLowerCase().includes(q)) : [];
     const ask = U.find((u) => u.id === this.state.ask);
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       q: this.state.q,
       hasQ: this.state.q.length > 0,
       tooShort: short,

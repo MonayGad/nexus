@@ -47,8 +47,8 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 <span class="col grow"><span class="ts">{{bannerTitle}}</span><span class="cap" style="color: {{bannerFg}}">{{bannerText}}</span></span>
 </div>
 <div class="glass col" style="border-radius: 24px; padding: 14px; gap: 10px">
-<div class="row"><span class="av c-maroon">NR</span><span class="col grow"><span class="ts">You</span><span class="cap">Submitted Oct 25, 8:51 PM</span></span><span class="{{stateChip}}">{{stateLabel}}</span></div>
-<div class="file"><span class="tile bg-pink" style="width: 38px; height: 38px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">study_guide_nour.pdf</span><span class="cap">2.2 MB · Tap to open</span></span><button class="ib ib-soft ib-sm" aria-label="Download study_guide_nour.pdf"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg></button></div>
+<div class="row"><span class="av c-maroon">MG</span><span class="col grow"><span class="ts">You</span><span class="cap">Submitted Oct 25, 8:51 PM</span></span><span class="{{stateChip}}">{{stateLabel}}</span></div>
+<div class="file"><span class="tile bg-pink" style="width: 38px; height: 38px; border-radius: 12px"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span><span class="col grow"><span class="ts">study_guide_monay.pdf</span><span class="cap">2.2 MB · Tap to open</span></span><button class="ib ib-soft ib-sm" aria-label="Download study_guide_monay.pdf"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg></button></div>
 </div>
 <sc-if value="{{canEdit}}" hint-placeholder-val="{{ false }}">
 <div class="field"><label class="over" for="note">Note</label><textarea id="note" class="area" placeholder="Add a note for your instructor..." style="min-height: 80px"></textarea><span class="cap">Notes stay on this screen for now.</span></div>
@@ -58,7 +58,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"state":{"editor":"enum","options":["graded","submitted","returned","locked"],"default":"graded"},"$preview":{"width":390,"height":1200}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"state":{"editor":"enum","options":["graded","submitted","returned","locked"],"default":"graded"},"$preview":{"width":390,"height":1200}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.props.state ?? 'graded';
@@ -69,7 +69,7 @@ class Component extends DCLogic {
       locked: ['Locked — Deadline passed', 'The deadline has passed. This submission is now read-only.', '#FBE1E7', '#B3261E', 'chip c-danger', 'Locked']
     }[s];
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       isGraded: s === 'graded',
       canEdit: s === 'submitted' || s === 'returned',
       due: s === 'locked' ? 'Due Oct 24, 11:59 PM (passed)' : 'Due Oct 28, 11:59 PM',

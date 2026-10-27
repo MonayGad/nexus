@@ -62,7 +62,7 @@ a{color:#7A1426}a:hover{color:#4A0D18}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1060}}'>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1060}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { role: 'Admin' }; }
   renderVals() {
@@ -72,7 +72,7 @@ class Component extends DCLogic {
       ? [{ n: 2, label: 'Draft', tone: '#F2A93B' }, { n: 5, label: 'Published', tone: '#5B8DEF' }, { n: 12, label: 'Delivered', tone: '#2F9E6B' }]
       : [{ n: 3, label: 'To do', tone: '#FF7A59' }, { n: 9, label: 'Completed', tone: '#2F9E6B' }];
     return {
-      motion: (this.props.motion ?? true) ? '' : 'still',
+      motion: ((this.props.motion ?? true) ? '' : 'still') + (this.props.dark || (() => { try { return localStorage.getItem('nexus-theme') === 'dark'; } catch (e) { return false; } })() ? ' dark' : ''),
       isStaff: staff,
       isMember: !staff,
       roles: ['Admin', 'Moderator', 'Member'].map((r) => ({ label: r, sel: r === role ? 'true' : 'false', cls: r === role ? 'tab on' : 'tab', pick: () => this.setState({ role: r }) })),

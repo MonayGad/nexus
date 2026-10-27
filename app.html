@@ -35,6 +35,16 @@ body.desk #side{display:flex}
 #side a,#side button{display:inline-flex;align-items:center;justify-content:center;height:48px;border-radius:16px;font:inherit;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;border:none}
 #side .primary{background:#7A1426;color:#fff;box-shadow:0 10px 24px rgba(122,20,38,.3)}
 #side .soft{background:rgba(255,255,255,.75);color:#1B1D22;border:1px solid #fff}
+html.dark body{background:#120A10;color:#F4EEF1}
+html.dark p.lead,html.dark footer,html.dark #side p{color:#A89EAB}
+html.dark nav{background:rgba(18,10,16,.75);border-color:rgba(255,255,255,.08)}
+html.dark nav a{background:rgba(255,255,255,.08);color:#F4EEF1}
+html.dark h1 em,html.dark #side h1 em{color:#F08AA0}
+html.dark #themeBtn{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.14)!important}
+html.dark body.desk{background:radial-gradient(circle at 80% 10%,rgba(184,48,74,.35),transparent 40%),radial-gradient(circle at 10% 80%,rgba(110,91,239,.25),transparent 45%),#120A10}
+html.dark #splash{background:#120A10}html.dark #splash span{color:#F4EEF1}
+html.dark #side .soft{background:rgba(255,255,255,.08);color:#F4EEF1;border-color:rgba(255,255,255,.14)}
+html.dark .blob{opacity:.25}
 </style>
 </head>
 <body>
@@ -45,6 +55,7 @@ body.desk #side{display:flex}
 <h1>Nexus,<br><em>redesigned.</em></h1>
 <p>A live prototype of the student app. Click through it like the real thing: sign in, open a workspace, submit a task, chat.</p>
 <button class="primary" id="restart">Restart from login</button>
+<button class="soft" id="themeBtn" type="button" aria-label="Toggle dark mode">Dark mode</button>
 <a class="soft" href="index.html">See all 45 screens</a>
 <p style="font-size:13px">On your phone, open this link and choose “Add to Home Screen” to use it like an app.</p>
 </aside>
@@ -71,6 +82,15 @@ let shown = false;
 const hideSplash = () => { if (!shown) { shown = true; setTimeout(() => document.getElementById('splash').classList.add('hide'), 700); } };
 frame.addEventListener('load', hideSplash); setTimeout(hideSplash, 4000);
 document.getElementById('restart').addEventListener('click', () => { frame.src = 'Login.dc.html'; });
+</script>
+<script>
+(function(){
+  const b=document.getElementById('themeBtn');
+  const get=()=>{try{return localStorage.getItem('nexus-theme')==='dark'}catch(e){return false}};
+  const apply=()=>{const d=get();document.documentElement.classList.toggle('dark',d);if(b)b.textContent=d?'Light mode':'Dark mode';};
+  apply();
+  if(b)b.addEventListener('click',()=>{try{localStorage.setItem('nexus-theme',get()?'light':'dark')}catch(e){};apply();document.querySelectorAll('iframe').forEach(f=>{try{f.contentWindow.location.reload()}catch(e){f.src=f.src}});});
+})();
 </script>
 </body>
 </html>
